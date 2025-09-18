@@ -20,6 +20,8 @@
 
         <!-- Traditional login -->
         <form class="login-form" method="POST" action="{{ url_for('login') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
             <label>Username:</label>
             <input type="text" name="name"><br><br>
             <label>Password:</label>
