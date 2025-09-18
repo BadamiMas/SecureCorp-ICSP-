@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SecureCorp Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>SecureCorp</h2>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Job Section</a></li>
+                <li><a href="#">Documents</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header>
+            <h1>Welcome {{ user }} ({{ role }})</h1>
+        </header>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Placeholder for Quick Stats Cards (Day 2) -->
+        <section class="cards">
+            <!-- Cards will be dynamically filled later -->
+        </section>
+
+        <!-- Panels -->
+        <section class="panels">
+            <div class="announcements">
+                <h3>Announcements</h3>
+                <ul>
+                    <li>No announcements yet</li>
+                </ul>
+            </div>
+            <div class="notifications">
+                <h3>Notifications</h3>
+                <ul>
+                    <li>No notifications yet</li>
+                </ul>
+            </div>
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <ul>
+                    <li>No activity yet</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

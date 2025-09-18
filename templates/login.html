@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ICSP Logo">
+        </div>
+
+        <!-- Divider -->
+        <div class="divider">
+            <hr>
+        </div>
+
+        <!-- Traditional login -->
+        <form class="login-form" method="POST" action="{{ url_for('login') }}">
+            <label>Username:</label>
+            <input type="text" name="name"><br><br>
+            <label>Password:</label>
+            <input type="password" name="password"><br><br>
+            <button type="submit">Login</button>
+        </form>
+
+        <!-- Divider -->
+        <div class="divider">
+            <hr>
+        </div>
+
+        <!-- Facial recognition buttons -->
+        <div class="face-login">
+            <button class="face-btn">
+                <img src="{{ url_for('static', filename='images/camera.png') }}" alt="ICSP Logo">
+                Login with Face
+            </button>
+        </div>
+    </div>
+</body>
+</html>
