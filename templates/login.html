@@ -36,11 +36,69 @@
 
         <!-- Facial recognition buttons -->
         <div class="face-login">
-            <button class="face-btn">
-                <img src="{{ url_for('static', filename='images/camera.png') }}" alt="ICSP Logo">
-                Login with Face
-            </button>
+            <form method="POST" action="{{ url_for('face_login') }}">
+                <input type="hidden" name="csrf_token" onclick="startFaceLogin()" value="{{ csrf_token() }}">
+                <button type="button" class="face-btn">
+                    <img src="{{ url_for('static', filename='images/camera.png') }}" alt="ICSP Logo">
+                    Login with Face
+                </button>
+            </form>
         </div>
+        <!-- Webcam preview (hidden until needed) -->
+        <video id="webcam" autoplay playsinline width="320" height="240" style="display:none;"></video>
+        <canvas id="snapshot" width="320" height="240" style="display:none;"></canvas>
+
+        <script>
+        function startFaceLogin() {
+            // Ask for webcam
+            navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                const video = document.createElement("video");
+                video.srcObject = stream;
+                video.play();
+
+                // Wait until video is ready
+                video.onloadeddata = () => {
+                    // Draw a single frame to canvas
+                    const canvas = document.createElement("canvas");
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    // Stop webcam stream
+                    stream.getTracks().forEach(track => track.stop());
+
+                    // Convert to base64
+                    const imageData = canvas.toDataURL("image/jpeg");
+
+                    // Send to Flask
+                    fetch("{{ url_for('face_login') }}", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ image: imageData })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = data.redirect; // go to dashboard
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error:", err);
+                        alert("Something went wrong with face login");
+                    });
+                };
+            })
+            .catch(err => {
+                console.error("Camera error:", err);
+                alert("Unable to access camera");
+            });
+        }
+        </script>
+
     </div>
 </body>
 </html>
