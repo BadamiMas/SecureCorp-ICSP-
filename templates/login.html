@@ -36,14 +36,13 @@
 
         <!-- Facial recognition buttons -->
         <div class="face-login">
-            <form method="POST" action="{{ url_for('face_login') }}">
-                <input type="hidden" name="csrf_token" onclick="startFaceLogin()" value="{{ csrf_token() }}">
-                <button type="button" class="face-btn">
-                    <img src="{{ url_for('static', filename='images/camera.png') }}" alt="ICSP Logo">
-                    Login with Face
-                </button>
-            </form>
+            <input type="hidden" name="csrf_token" onclick="startFaceLogin()" value="{{ csrf_token() }}">
+            <button type="button" class="face-btn">
+                <img src="{{ url_for('static', filename='images/camera.png') }}" alt="ICSP Logo">
+                Login with Face
+            </button>
         </div>
+
         <!-- Webcam preview (hidden until needed) -->
         <video id="webcam" autoplay playsinline width="320" height="240" style="display:none;"></video>
         <canvas id="snapshot" width="320" height="240" style="display:none;"></canvas>
@@ -75,7 +74,10 @@
                     // Send to Flask
                     fetch("{{ url_for('face_login') }}", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: { 
+                            "Content-Type": "application/json", 
+                            "X-CSRFToken": "{{ csrf_token() }}"
+                        },
                         body: JSON.stringify({ image: imageData })
                     })
                     .then(res => res.json())
