@@ -36,8 +36,8 @@
 
         <!-- Facial recognition buttons -->
         <div class="face-login">
-            <input type="hidden" name="csrf_token" onclick="startFaceLogin()" value="{{ csrf_token() }}">
-            <button type="button" class="face-btn">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="button" class="face-btn" onclick="startFaceLogin()">
                 <img src="{{ url_for('static', filename='images/camera.png') }}" alt="ICSP Logo">
                 Login with Face
             </button>

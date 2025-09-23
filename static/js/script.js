@@ -1,4 +1,7 @@
 function startFaceLogin() {
+    const video = document.getElementById("webcam");
+    video.style.display = "block"; // show preview
+
     // Ask for webcam access
     navigator.mediaDevices.getUserMedia({ video: true })
     .then(stream => {
@@ -19,6 +22,7 @@ function startFaceLogin() {
 
             // Convert snapshot to base64
             const imageData = canvas.toDataURL("image/jpeg");
+            console.log(imageData); // should start with "data:image/jpeg;base64,"
 
             // Send to Flask
             fetch("{{ url_for('face_login') }}", {

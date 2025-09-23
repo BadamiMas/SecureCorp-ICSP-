@@ -67,7 +67,12 @@ def login():
 def face_login():
     data = request.get_json()
     if not data or "image" not in data:
+        print("No image received!")   # <-- debug
         return jsonify({"success": False, "message": "No image received"})
+    
+    print("Image received!")   # <-- debug
+    print(data["image"][:50])   # <-- debug
+
 
     # Decode base64 image from browser
     image_data = data["image"].split(",")[1]
