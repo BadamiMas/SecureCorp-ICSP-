@@ -49,33 +49,31 @@
 
         <script>
         function startFaceLogin() {
-            // Ask for webcam
+            const video = document.getElementById("webcam");
+            video.style.display = "block"; // show preview
+
             navigator.mediaDevices.getUserMedia({ video: true })
             .then(stream => {
-                const video = document.createElement("video");
                 video.srcObject = stream;
-                video.play();
 
-                // Wait until video is ready
-                video.onloadeddata = () => {
-                    // Draw a single frame to canvas
-                    const canvas = document.createElement("canvas");
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
+                // Wait 2 seconds for camera to adjust
+                setTimeout(() => {
+                    const canvas = document.getElementById("snapshot");
                     const ctx = canvas.getContext("2d");
                     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                    // Stop webcam stream
+                    // Stop webcam
                     stream.getTracks().forEach(track => track.stop());
+                    video.style.display = "none"; // hide preview
 
-                    // Convert to base64
+                    // Convert snapshot to base64
                     const imageData = canvas.toDataURL("image/jpeg");
 
                     // Send to Flask
                     fetch("{{ url_for('face_login') }}", {
                         method: "POST",
                         headers: { 
-                            "Content-Type": "application/json", 
+                            "Content-Type": "application/json",
                             "X-CSRFToken": "{{ csrf_token() }}"
                         },
                         body: JSON.stringify({ image: imageData })
@@ -83,7 +81,7 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            window.location.href = data.redirect; // go to dashboard
+                            window.location.href = data.redirect;
                         } else {
                             alert(data.message);
                         }
@@ -92,7 +90,7 @@
                         console.error("Error:", err);
                         alert("Something went wrong with face login");
                     });
-                };
+                }, 2000);
             })
             .catch(err => {
                 console.error("Camera error:", err);
