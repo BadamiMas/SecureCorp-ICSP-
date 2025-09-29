@@ -56,7 +56,7 @@ def login():
 
     if user:
         session['username'] = user['name']
-        session['role'] = user['role']
+        session['role'] = user.get("role", "user")
         return redirect(url_for('dashboard'))
     else:
         flash("Invalid username or password")
@@ -107,7 +107,7 @@ def face_login():
 @app.route('/dashboard')
 def dashboard():
     if 'username' in session:
-        return render_template('test.html', username=session['username'])
+        return render_template('test.html', username=session['user'])
     else:
         return redirect(url_for('home'))
 
