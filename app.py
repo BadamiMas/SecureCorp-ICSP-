@@ -99,6 +99,7 @@ def face_login():
         match = face_recognition.compare_faces([db_encoding], current_encoding)[0]
         if match:
             session["user"] = user["name"]
+            session["role"] = user.get("role", "user")
             return jsonify({"success": True, "redirect": url_for("dashboard")})
 
     return jsonify({"success": False, "message": "Face not recognized"})
