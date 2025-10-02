@@ -15,7 +15,7 @@ app.secret_key = "icsp"  # needed for session
 
 # Security Config
 app.config['SESSION_COOKIE_SECURE'] = True
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=1)
 
 # Extensions
 bcrypt = Bcrypt(app)
@@ -55,7 +55,7 @@ def login():
     conn.close()
 
     if user:
-        session['username'] = user['name']
+        session['user'] = user['name']
         session['role'] = user.get("role", "user")
         return redirect(url_for('dashboard'))
     else:
@@ -107,7 +107,7 @@ def face_login():
 
 @app.route('/dashboard')
 def dashboard():
-    if 'username' in session:
+    if 'user' in session:
         return render_template('test.html', username=session['user'])
     else:
         return redirect(url_for('home'))
