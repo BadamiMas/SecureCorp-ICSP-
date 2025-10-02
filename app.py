@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session, flash
 import mysql.connector
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt, generate_password_hash
 from flask_wtf import CSRFProtect
 from datetime import timedelta
 from flask_wtf.csrf import generate_csrf
@@ -21,6 +21,10 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=1)
 bcrypt = Bcrypt(app)
 csrf = CSRFProtect(app)
 csrf.init_app(app)
+
+
+
+
 
 @app.context_processor
 def inject_csrf_token():
