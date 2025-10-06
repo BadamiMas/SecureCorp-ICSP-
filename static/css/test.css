@@ -8,7 +8,7 @@
 .container {
     width: 100%;
     min-height: 50vh;
-    background: rgb(159, 202, 157);
+    background: rgb(4, 82, 0);
     padding: 50px;
     border-radius: 50px;
 }
@@ -16,7 +16,7 @@
 .todo-list {
     width: 100%;
     max-width: 540px auto;
-    background: #fff;
+    background: #d2ffe3;
     margin: 50px auto 20px;
     padding: 40px 30px 70px;
     border-radius: 80px;
@@ -38,7 +38,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #cca3af;
+    background: #ccb4bb;
     padding-left: 20px;
     border-radius: 30px;
     margin-bottom: 25px;
@@ -70,4 +70,27 @@ ul li {
     font-size: 17px;
     user-select: none;
     cursor: pointer;
+    position: relative;
+}
+
+ul li::before {
+    content: '';
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-image: url('../images/unchecked.png');
+    background-size: cover;
+    background-position: center;
+    top: 12px;
+    left: 8px;
+}
+
+ul li.checked {
+    color: #555;
+    text-decoration: line-through;
+}
+
+ul li.checked::before {
+    background-image: url('../images/checked.png');
 }

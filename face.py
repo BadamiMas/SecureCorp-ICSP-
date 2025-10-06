@@ -9,7 +9,7 @@ import dlib
 
 
 # Load an image of yourself (make sure it's clear and shows your face)
-image = face_recognition.load_image_file(r"e:\PSB\Degree Cyber\ICSP\taher.jpg")
+image = face_recognition.load_image_file(r"e:\PSB\Degree Cyber\ICSP\baba.jpg")
 
 # Get encodings
 encodings = face_recognition.face_encodings(image)
