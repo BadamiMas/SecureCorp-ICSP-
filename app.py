@@ -15,7 +15,11 @@ app.secret_key = "icsp"  # needed for session
 
 # Security Config
 app.config['SESSION_COOKIE_SECURE'] = True
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=1)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    session.modified = True  # tells Flask to reset the expiration
 
 # Extensions
 bcrypt = Bcrypt(app)

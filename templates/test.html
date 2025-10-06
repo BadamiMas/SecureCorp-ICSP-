@@ -7,14 +7,24 @@
 </head>
 <body>
     
-    <h1>Hello, {{ username }}! 👋 Welcome to the Dashboard</h1>
-    <a href="{{ url_for('logout') }}">Logout</a>
+<h1>Hello, {{ username }}! 👋 Welcome to the Dashboard</h1>
+<a href="{{ url_for('logout') }}">Logout</a>
 
-    <div class="container">
-        <div class="todo-list">
-            <h2>To-Do List <img src="{{ url_for('static', filename='images/icon.png') }}"></h2>
+<div class="container">
+    <div class="todo-list">
+        <h2>To-Do List <img src="{{ url_for('static', filename='images/icon.png') }}"></h2>
+        <div class="row">
+            <input type="text" id="input-box" placeholder="Add a new task...">
+            <button>Add</button>
         </div>
+        <ul id="list">
+            <!-- Tasks will be added here dynamically -->
+             <li>Task 1</li>
+             <li>Task 2</li>
+             <li>Task 3</li>
+        </ul>
     </div>
+</div>
 </body>
 </html>
 

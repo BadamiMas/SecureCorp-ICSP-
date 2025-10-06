@@ -8,6 +8,66 @@
 .container {
     width: 100%;
     min-height: 50vh;
-    background: rgb(114, 0, 0);
+    background: rgb(159, 202, 157);
+    padding: 50px;
+    border-radius: 50px;
+}
+
+.todo-list {
+    width: 100%;
+    max-width: 540px auto;
+    background: #fff;
+    margin: 50px auto 20px;
+    padding: 40px 30px 70px;
+    border-radius: 80px;
+}
+
+.todo-list h2 {
+    align-items: center;
+    margin-bottom: 20px;
+    color: #002756;
+    display: flex;
+}
+
+.todo-list h2 img {
+    width: 30px;
+    margin-left: 10px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #cca3af;
+    padding-left: 20px;
+    border-radius: 30px;
+    margin-bottom: 25px;
+}
+
+input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-weight: 14px;
     padding: 10px;
+    outline: none;
+}
+
+button {
+    border: none;
+    outline: none;
+    padding: 16px 50px;
+    background: #031957;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 40px;
+}
+
+ul li {
+    list-style: none;
+    padding: 12px 8px 12px 50px;
+    font-size: 17px;
+    user-select: none;
+    cursor: pointer;
 }
