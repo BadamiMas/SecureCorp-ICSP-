@@ -3,19 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            margin-top: 50%;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/test.css') }}">
 </head>
 <body>
+    <div class="container">
     <h1>Hello, {{ username }}! 👋 Welcome to the Dashboard</h1>
     <a href="{{ url_for('logout') }}">Logout</a>
 </body>
