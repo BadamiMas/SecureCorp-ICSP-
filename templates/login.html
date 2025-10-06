@@ -52,7 +52,7 @@
         <video id="webcam" autoplay playsinline width="320" height="240" style="display:none;"></video>
         <canvas id="snapshot" width="320" height="240" style="display:none;"></canvas>
 
-        <script>
+        <script src="{{ url_for('static', filename='js/login.js') }}" defer>
         function startFaceLogin() {
             const video = document.getElementById("webcam");
             video.style.display = "block"; // show preview
