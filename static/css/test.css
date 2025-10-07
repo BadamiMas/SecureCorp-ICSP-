@@ -5,6 +5,31 @@
     box-sizing: border-box;
 }
 
+
+.container1 {
+    display: grid;
+    grid-template-columns: 14rem auto 14rem;
+}
+
+.logo img {
+    width: 50px;   /* adjust as needed */
+    height: auto;
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .container {
     width: 100%;
     min-height: 50vh;
