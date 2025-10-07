@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 
 :root {
@@ -40,7 +40,7 @@
 
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     width: 100vw;
     height: 100vh;
     font-size: 0.88rem;
@@ -58,19 +58,102 @@ body {
     margin: 0 auto;
 }
 
+a {
+    color: var(--clr-dark);
+}
 
-.container1 {
-    display: grid;
-    grid-template-columns: 14rem auto 14rem;
-} 
 
+h1 {
+    font-weight: 800;
+    font-size: 1.8rem;
+}
+h2 {
+    font-size: 1.4rem;
+}
+h3 {
+    font-size: 0.87rem;
+}
+h4 {
+    font-size: 0.8rem;
+}
+h5 {
+    font-size: 0.77rem;
+}
+
+small {
+    font-size: 0.75rem;
+}
+.profile-photo {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.text-muted{
+    color: var(--clr-info-dark);
+}
+p {
+    color: var(--clr-dark-variant);
+}
+b {
+    color: var(--clr-dark);
+}
+.primary {
+    color: var(--clr-primary);
+}
+.success {
+    color: var(--clr-success);
+}
+.danger {
+    color: var(--clr-danger);
+}
+.warning {
+    color: var(--clr-warning);
+}
+
+
+/*aside section*/
+
+aside {
+    height: 100vh;
+}
+
+aside .top {
+    background-color: var(--clr-white);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1.4rem;
+}
+
+aside .logo  {
+    display: flex;
+    gap: 1rem;
+}
+
+/*logo image*/
 .logo img {
     width: 50px;   /* adjust as needed */
     height: auto;
     display: block;
 }
 
+aside .top div.close {
+    display: none;
+}
 
+/***********
+sidebar
+************/
+
+aside .sidebar {
+    background-color: var(--clr-white);
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+    position: relative;
+    top: 1rem;
+}
 
 
 
