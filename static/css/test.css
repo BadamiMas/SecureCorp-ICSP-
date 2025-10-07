@@ -1,15 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+:root {
+    --clr-primary: #004d00;
+    --clr-danger: #ff4d4d;
+    --clr-success: #4dff4d;
+    --clr-white: #ffffff;
+    --clr-info-dark: #031957;
+    --clr-info-light: #002756;
+    --clr-dark: #000000;
+    --clr-warning: #ffcc00;
+    --clr-light: #f0f0f0;
+    --clr-primary-variant: #006600;
+    --clr-dark-variant: #1a1a1a;
+    --clr-color-background: #d2ffe3;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 0.8rem;
+    --border-radius-3: 1.2rem;
+
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+    --box-shadow: 0 2rem 3rem var(--clr-light);
+
+}
+
+
 *{
     margin: 0;
     padding: 0;
-    font-family: 'poppins', sans-serif;
     box-sizing: border-box;
+    text-decoration: none;
+    border: 0;
+    list-style: none;
+    appearance: none;
+}
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    font-size: 0.88rem;
+    user-select: none;
+    overflow-x: hidden;
+    background: var(--clr-color-background);
+}
+
+
+.container1 {
+    display: grid;
+    width: 96%;
+    gap: 1.8rem;
+    grid-template-columns: 14rem auto 14rem;
+    margin: 0 auto;
 }
 
 
 .container1 {
     display: grid;
     grid-template-columns: 14rem auto 14rem;
-}
+} 
 
 .logo img {
     width: 50px;   /* adjust as needed */
@@ -28,7 +81,7 @@
 
 
 
-
+/* to do list */
 
 .container {
     width: 100%;
