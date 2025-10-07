@@ -155,7 +155,53 @@ aside .sidebar {
     top: 1rem;
 }
 
+aside h3 {
+    font-weight:400;
+}
 
+aside .sidebar a {
+    display: flex;
+    color: var(--clr-info-dark);
+    margin-left: 2rem;
+    gap: 1rem;
+    align-items: center;
+    height: 3.2rem;
+    transition: all .1s ease-in;
+}
+
+aside .sidebar a span {
+    font-size: 1.6rem;
+    transition: all .1s ease-in;
+}
+
+aside .sidebar a:last-child {
+    position: absolute;
+    bottom: 1rem;
+    width: 100%;
+}
+
+aside .sidebar a.active {
+    background-color: var(--clr-light);
+    color: var(--clr-primary);
+    margin-left: 0;
+  /*border-left: 5px solid var(--clr-primary); */
+}
+
+aside .sidebar a.active::before {
+    content: '';
+    width: 6px;
+    height: 100%;
+    background-color: var(--clr-primary);
+}
+
+aside .sidebar a:hover {
+    background-color: var(--clr-primary);
+}
+
+aside .sidebar a:hover span {
+    margin-left: 1rem;
+    transition: .4s ease;
+}
 
 
 
