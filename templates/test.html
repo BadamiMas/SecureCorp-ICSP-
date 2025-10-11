@@ -127,94 +127,104 @@
         <!--end insights-->
 
 
-    <!--recent orders start-->
-    <div class="recent_order">
-        <h1>Recent Orders</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Product Number</th>
-                    <th>Payment</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Foldable Mini Drone</td>
-                    <td>85631</td>
-                    <td>Due</td>
-                    <td class="warning">Pending</td>
-                    <td class="primary">Details</td>
-                </tr>
-                <tr>
-                    <td>LARVENDER KF102 Drone</td>
-                    <td>36378</td>
-                    <td>Refunded</td>
-                    <td class="danger">Declined</td>
-                    <td class="primary">Details</td>
-                </tr>
-                <tr>
-                    <td>Ruko F11 Pro Drone</td>
-                    <td>49347</td>
-                    <td>Due</td>
-                    <td class="warning">Pending</td>
-                    <td class="primary">Details</td>
-                </tr>
-                <tr>
-                    <td>Drone with Camera Drone</td>
-                    <td>96996</td>
-                    <td>Paid</td>
-                    <td class="success">Delivered</td>
-                    <td class="primary">Details</td>
-                </tr>
-                <tr>
-                    <td>GPS 4K Drone</td>
-                    <td>22821</td>
-                    <td>Paid</td>
-                    <td class="success">Delivered</td>
-                    <td class="primary">Details</td>
-                </tr>
-                <tr>
-                    <td>DJI Air 2S</td>
-                    <td>81475</td>
-                    <td>Due</td>
-                    <td class="warning">Pending</td>
-                    <td class="primary">Details</td>
-                </tr>
-                <tr>
-                    <td>Lozenge Drone</td>
-                    <td>00482</td>
-                    <td>Paid</td>
-                    <td class="success">Delivered</td>
-                    <td class="primary">Details</td>
-                </tr>
+        <!--recent orders start-->
+        <div class="recent_order">
+            <h1>Recent Orders</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Product Number</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Foldable Mini Drone</td>
+                        <td>85631</td>
+                        <td>Due</td>
+                        <td class="warning">Pending</td>
+                        <td class="primary">Details</td>
+                    </tr>
+                    <tr>
+                        <td>LARVENDER KF102 Drone</td>
+                        <td>36378</td>
+                        <td>Refunded</td>
+                        <td class="danger">Declined</td>
+                        <td class="primary">Details</td>
+                    </tr>
+                    <tr>
+                        <td>Ruko F11 Pro Drone</td>
+                        <td>49347</td>
+                        <td>Due</td>
+                        <td class="warning">Pending</td>
+                        <td class="primary">Details</td>
+                    </tr>
+                    <tr>
+                        <td>Drone with Camera Drone</td>
+                        <td>96996</td>
+                        <td>Paid</td>
+                        <td class="success">Delivered</td>
+                        <td class="primary">Details</td>
+                    </tr>
+                    <tr>
+                        <td>GPS 4K Drone</td>
+                        <td>22821</td>
+                        <td>Paid</td>
+                        <td class="success">Delivered</td>
+                        <td class="primary">Details</td>
+                    </tr>
+                    <tr>
+                        <td>DJI Air 2S</td>
+                        <td>81475</td>
+                        <td>Due</td>
+                        <td class="warning">Pending</td>
+                        <td class="primary">Details</td>
+                    </tr>
+                    <tr>
+                        <td>Lozenge Drone</td>
+                        <td>00482</td>
+                        <td>Paid</td>
+                        <td class="success">Delivered</td>
+                        <td class="primary">Details</td>
+                    </tr>
 
-        </table>
-    </div>
+            </table>
+        </div>
     <!--recent orders end-->
-
-
-
-
-
-
-
-
-
         </main>
     <!--main section end-->
 
     
-    <!--right section start-->
+        <!--right section start-->
         <div class="right">
-            <h1>right</h1>
+            <div class="top">
+                <button id="menu-bar">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-symbols-outlined">light_mode</span>
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p><b>{{ username }}</b></p>
+                        <p>Admin</p>
+                        <small class="text-muted"></small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="{{ url_for('static', filename='images/me.jpg') }}">
+                    </div>
+                </div>
+            </div>
+
         </div>
-    <!--end right section-->
+        <!--end right section-->
 </div>
 
 
-<div class="container">
+<div class="to-do">
     <!--todo list section start-->
     <div class="todo-list">
         <h2>To-Do List <img src="{{ url_for('static', filename='images/icon.png') }}"></h2>

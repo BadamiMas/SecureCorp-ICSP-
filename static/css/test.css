@@ -83,7 +83,7 @@ h5 {
 small {
     font-size: 0.75rem;
 }
-.profile-photo {
+.profile img {
     width: 2.8rem;
     height: 2.8rem;
     border-radius: 50%;
@@ -357,15 +357,50 @@ main .recent_order h2 {
 
 main .recent_order table {
     background-color: var(--clr-white);
+    width: 100%;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+    color: var(--clr-dark)
+}
+
+main .recent_order table:hover {
+    box-shadow: none;
+}
+
+main table tbody tr {
+    height: 3.8rem;
+    border-bottom: 1px solid var(--clr-white);
+    color: var(--clr-dark-variant);
+}
+
+main table tbody td {
+    height: 3.8rem;
+    border-bottom: 1px solid var(--clr-dark);
+}
+
+main table tbody tr:last-child td {
+    border: none;
+}
+
+main .recent_order a {
+    text-align: center;
+    display: block;
+    margin-top: 1rem;
 }
 
 
 
 
 
-/* to do list */
 
-.container {
+/****************
+TO DO LIST
+****************/
+
+.to-do {
     width: 100%;
     min-height: 50vh;
     background: rgb(4, 82, 0);
@@ -413,7 +448,7 @@ input {
     outline: none;
 }
 
-button {
+.to-do button {
     border: none;
     outline: none;
     padding: 16px 50px;
