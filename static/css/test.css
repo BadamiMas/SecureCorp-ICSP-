@@ -47,6 +47,7 @@ body {
     user-select: none;
     overflow-x: hidden;
     background: var(--clr-color-background);
+    overflow: auto;
 }
 
 
@@ -54,7 +55,7 @@ body {
     display: grid;
     width: 96%;
     gap: 1.8rem;
-    grid-template-columns: 14rem auto 14rem;
+    grid-template-columns: 14rem 1fr 18rem;
     margin: 0 auto;
 }
 
@@ -397,6 +398,7 @@ RIGHT SECTION
 *******************/
 
 .right {
+    width: auto;
     margin-top: 1.4rem;
 }
 
@@ -457,7 +459,8 @@ RECENT UPDATES
 *******************/
 
 .right .recent_updates {
-    margin-top: 1rem;
+    margin-top: 1.8rem;
+    margin-bottom: 2rem;
     margin-left: -20px;
 }
 
@@ -473,84 +476,103 @@ RECENT UPDATES
     box-shadow: none;
 }
 
-
-
-
+.right .recent_updates .update {
+    display: grid;
+    grid-template-columns: 3rem auto;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
 
 
 /****************
 TO DO LIST
 ****************/
 
-.to-do {
+.right .to-do {
+    margin-top: 2.5rem;
     width: 100%;
-    min-height: 50vh;
+    min-height: 40vh;
+    max-height: 50vh;
+    overflow-y: auto;
     background: rgb(4, 82, 0);
-    padding: 50px;
+    background-color: var(--clr-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+}
+
+.right .to-do:hover {
+    box-shadow: none;
+}
+
+.right .todo-list {
+    width: 100%;
+    max-width: 100%;
+    background: #d2ffe3;
+    margin: 20px 0;
+    padding: 20px 20px 40px;
     border-radius: 50px;
 }
 
-.todo-list {
-    width: 100%;
-    max-width: 540px auto;
-    background: #d2ffe3;
-    margin: 50px auto 20px;
-    padding: 40px 30px 70px;
-    border-radius: 80px;
-}
-
-.todo-list h2 {
+.right .todo-list h2 {
     align-items: center;
     margin-bottom: 20px;
     color: #002756;
     display: flex;
 }
 
-.todo-list h2 img {
+.right .todo-list h2 img {
     width: 30px;
     margin-left: 10px;
 }
 
-.row {
+.right .row {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
     background: #ccb4bb;
-    padding-left: 20px;
+    padding: 5px 15px;
     border-radius: 30px;
     margin-bottom: 25px;
 }
 
-input {
-    flex: 1;
+.right input {
+    flex: 1 1 auto;
     border: none;
     background: transparent;
     font-weight: 14px;
-    padding: 10px;
+    padding: 10px 15px;
     outline: none;
+    min-width: 0;
+    color:#000;
 }
 
-.to-do button {
+.right .to-do button {
     border: none;
     outline: none;
-    padding: 16px 50px;
+    padding: 10px 15px;
+    margin-left: 10px;
     background: #031957;
     color: #fff;
     cursor: pointer;
     font-size: 16px;
     border-radius: 40px;
+    white-space: nowrap;
 }
 
-ul li {
+.right ul li {
     list-style: none;
-    padding: 12px 8px 12px 50px;
+    padding: 14px 8px 14px 50px;
+    margin-bottom: 10px;
     font-size: 17px;
     user-select: none;
     cursor: pointer;
     position: relative;
 }
 
-ul li::before {
+.right ul li::before {
     content: '';
     position: absolute;
     height: 28px;
@@ -563,16 +585,16 @@ ul li::before {
     left: 8px;
 }
 
-ul li.checked {
+.right ul li.checked {
     color: #555;
     text-decoration: line-through;
 }
 
-ul li.checked::before {
+.right ul li.checked::before {
     background-image: url('../images/checked.png');
 }
 
-ul li span {
+.right ul li span {
     position: absolute;
     right: 0px;
     top: 5px;
@@ -585,6 +607,6 @@ ul li span {
     border-radius: 50%;
 }
 
-ul li span:hover {
+.right ul li span:hover {
     background: #edeef0;
 }

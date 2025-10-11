@@ -258,57 +258,21 @@
             </div>
             <!--end recent update-->
 
-            <!--start sale analytics-->
-            <div class="sale_analytics">
-                <h2>Sales Analytics</h2>
-
-
-                <div class="item online">
-                    <div class="icon">
-                        <span class="material-symbols-outlined">shopping_cart</span>
+            <!--start to do list-->
+            <div class="to-do">
+                <!--todo list section start-->
+                <div class="todo-list">
+                    <h2>To-Do List <img src="{{ url_for('static', filename='images/icon.png') }}"></h2>
+                    <div class="row">
+                        <input type="text" id="input-box" placeholder="Add task...">
+                        <button onclick="addTask()">Add</button>
                     </div>
-                    <div class="right_text">
-                        <div class="info">
-                            <h3>ONLINE ORDERS</h3>
-                            <small class="text-muted">Last seen 2 Hours Ago</small>
-                        </div>
-                        <h5 class="danger">-17%</h5>
-                        <h3>3849</h3>
-                    </div>
+                    <ul id="list">
+            <!-- tasks will show -->
+                    </ul>
                 </div>
-
-                <div class="item online">
-                    <div class="icon">
-                        <span class="material-symbols-outlined">shopping_cart</span>
-                    </div>
-                    <div class="right_text">
-                        <div class="info">
-                            <h3>ONLINE ORDERS</h3>
-                            <small class="text-muted">Last seen 2 Hours Ago</small>
-                        </div>
-                        <h5 class="danger">-17%</h5>
-                        <h3>3849</h3>
-                    </div>
-                </div>
-
-                <div class="item online">
-                    <div class="icon">
-                        <span class="material-symbols-outlined">shopping_cart</span>
-                    </div>
-                    <div class="right_text">
-                        <div class="info">
-                            <h3>ONLINE ORDERS</h3>
-                            <small class="text-muted">Last seen 2 Hours Ago</small>
-                        </div>
-                        <h5 class="danger">-17%</h5>
-                        <h3>3849</h3>
-                    </div>
-                </div>
-
-
-
             </div>
-            <!--end sale analytics-->
+            <!--end to do list-->
 
         </div>
         <!--end right section-->
@@ -316,36 +280,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-<!----------------
-TO DO LIST
------------------>
-
-<div class="to-do">
-    <!--todo list section start-->
-    <div class="todo-list">
-        <h2>To-Do List <img src="{{ url_for('static', filename='images/icon.png') }}"></h2>
-        <div class="row">
-            <input type="text" id="input-box" placeholder="Add a new task...">
-            <button onclick="addTask()">Add</button>
-        </div>
-        <ul id="list">
-            <!-- <li class="checked">Task 1</li>
-            <li>Task 2</li>
-            <li>Task 3</li> -->
-        </ul>
-    </div>
-</div>
 
 
 <h1>Hello, {{ username }}! 👋 Welcome to the Dashboard</h1>
