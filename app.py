@@ -115,10 +115,33 @@ def face_login():
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user' in session:
-        return render_template('test.html', username=session['user'])
-    else:
+    if 'user' not in session:
         return redirect(url_for('home'))
+    
+    role = session.get('role', 'user')
+    if role == 'acc':
+        return redirect(url_for('acc_dashboard'))
+    elif role == 'hr':
+        return redirect(url_for('hr_dashboard'))
+    elif role == 'head':
+        return redirect(url_for('head_dashboard'))
+    else:
+        return render_template('test.html', username=session['user'])
+
+    
+
+@app.route('/acc_dashboard')
+def acc_dashboard():
+        return render_template('acc_dashboard.html', username=session['user'])
+
+@app.route('/head_dashboard')
+def head_dashboard():
+        return render_template('head_dashboard.html', username=session['user'])
+
+@app.route('/hr_dashboard')
+def hr_dashboard():
+        return render_template('hr_dashboard.html', username=session['user'])
+
 
 @app.route('/logout')
 def logout():

@@ -44,7 +44,7 @@
                     <span class="material-symbols-outlined">settings</span>
                     <h3>Setting</h3>
                 </a>
-                <a href="#">
+                <a href="{{ url_for('logout') }}">
                     <span class="material-symbols-outlined">logout</span>
                     <h3>Logout</h3>
                 </a>
@@ -60,8 +60,20 @@
         <main>
             <h1>Dashboard</h1>
              <div class="date">
-                <input type="date">
+                <input type="date" id="today-date">
              </div>
+
+             <script>
+                // Get today's date in YYYY-MM-DD format
+                const today = new Date();
+                const dd = String(today.getDate()).padStart(2, '0');
+                const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+                const yyyy = today.getFullYear();
+                const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+                // Set the value of the date input
+                document.getElementById('today-date').value = formattedDate;
+            </script>
 
         <div class="insights">  
             <!--start sales-->
