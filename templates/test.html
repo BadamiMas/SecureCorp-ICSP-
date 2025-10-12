@@ -20,7 +20,7 @@
                 <div class="logo">
                     <img src="{{ url_for('static', filename='images/logo.png') }}">
                 </div>
-                <div class="close">
+                <div class="close" id ="close-btn">
                     <span class="material-symbols-outlined"> close </span>
                 </div>
             </div>
@@ -28,7 +28,7 @@
 
             <div class="sidebar">
 
-                <a href="#" class="active">
+                <a href="{{ url_for('dashboard') }}" class="active">
                     <span class="material-symbols-outlined">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
@@ -272,9 +272,10 @@
 
             <!--start to do list-->
             <div class="to-do">
+                <h2>To-Do List</h2>
                 <!--todo list section start-->
                 <div class="todo-list">
-                    <h2>To-Do List <img src="{{ url_for('static', filename='images/icon.png') }}"></h2>
+                    
                     <div class="row">
                         <input type="text" id="input-box" placeholder="Add task...">
                         <button onclick="addTask()">Add</button>
@@ -290,12 +291,6 @@
         <!--end right section-->
 </div>
 
-
-
-
-
-<h1>Hello, {{ username }}! 👋 Welcome to the Dashboard</h1>
-<a href="{{ url_for('logout') }}">Logout</a>
 
 
 <script src="{{ url_for('static', filename='js/test.js') }}"></script>

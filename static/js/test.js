@@ -1,3 +1,39 @@
+const sidemenu = document.querySelector("aside");
+const menubtn = document.querySelector("#menu-bar");
+const closebtn = document.querySelector("#close-btn");
+
+
+const themeToggler = document.querySelector(".theme-toggler");
+
+menubtn.addEventListener("click", () => {
+    sidemenu.style.display = "block"
+})
+
+closebtn.addEventListener("click", () => {
+    sidemenu.style.display = "none"
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const inputBox = document.getElementById('input-box');
 const listContainer = document.getElementById('list');
 

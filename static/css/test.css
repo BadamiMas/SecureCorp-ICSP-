@@ -139,9 +139,6 @@ aside .logo  {
     display: block;
 }
 
-aside .top div.close {
-    display: none;
-}
 
 /***********
 sidebar
@@ -490,17 +487,18 @@ TO DO LIST
 ****************/
 
 .right .to-do {
-    margin-top: 2.5rem;
-    width: 100%;
-    min-height: 40vh;
-    max-height: 50vh;
-    overflow-y: auto;
-    background: rgb(4, 82, 0);
-    background-color: var(--clr-white);
-    border-radius: var(--card-border-radius);
-    padding: var(--card-padding);
-    box-shadow: var(--box-shadow);
-    transition: all .3s ease;
+    margin-top: 1.8rem;
+    margin-bottom: 2rem;
+    margin-left: -20px;
+}
+
+.right .to-do h2 {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    color: var(--clr-dark);
+    font-size: 1.3rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
 }
 
 .right .to-do:hover {
@@ -509,23 +507,14 @@ TO DO LIST
 
 .right .todo-list {
     width: 100%;
-    max-width: 100%;
-    background: #d2ffe3;
-    margin: 20px 0;
-    padding: 20px 20px 40px;
-    border-radius: 50px;
-}
-
-.right .todo-list h2 {
-    align-items: center;
-    margin-bottom: 20px;
-    color: #002756;
-    display: flex;
-}
-
-.right .todo-list h2 img {
-    width: 30px;
-    margin-left: 10px;
+    min-height: 48.5vh;
+    max-height: 48.5vh;
+    overflow-y: auto;
+    background-color: var(--clr-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
 }
 
 .right .row {
@@ -610,4 +599,121 @@ TO DO LIST
 
 .right ul li span:hover {
     background: #edeef0;
+}
+
+
+/****************
+MEDIA QUERY
+****************/
+
+@media screen and (max-width: 1200px) {
+    .container1 {
+        width: 94%;
+        grid-template-columns: 7rem auto 14rem;
+    }
+
+    aside .sidebar h3 {
+        display: none;
+    }
+
+    aside .sidebar a:last-child {
+        position: relative;
+        margin-top: 1.8rem;
+    }
+
+    main .insights {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+
+/****************
+MOBILE VIEW 
+****************/
+
+@media screen and (max-width: 768px) {
+    .container1 {
+        width: 100%;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    aside{
+        position: fixed;
+        width: 10rem;
+        z-index: 3;
+        background: var(--clr-white);
+        display: none;
+    }
+
+    aside .logo {
+        display: inline;
+    }
+
+    aside .sidebar h3 {
+        display: inline;
+    }
+
+    aside .sidebar a {
+        width: 100%;
+        height: 3.4rem;
+    }
+
+    aside .top div.close span {
+        display: inline;
+        position: absolute;
+        right: 0;
+        margin-left: 30px;
+        font-size: 35px;
+    }
+
+    .right .top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 0.8rem;
+        background: var(--clr-white);
+        width: 100%;
+        height: 4.6rem;
+        z-index: 2;
+        box-shadow: 0 1rem 1rem var(--box-shadow);
+        margin: 0;
+    }
+
+    main .insights {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1.6rem;
+        padding: 40px;
+    }
+
+    main .recent_order {
+        padding: 30px;
+        margin: 0 auto;
+    }
+
+    .rigth .profile {
+        position: absolute;
+        left: 70%;
+    }
+
+    .right .recent_updates {
+        padding: 30px;
+    }
+
+    .right .to-do {
+        padding: 30px;
+    }
+
+    .right .top button {
+        display: inline-block;
+        background: transparent;
+        cursor: pointer;
+        color: var(--clr-dark);
+        position: absolute;
+        left: 1rem;
+    }
 }

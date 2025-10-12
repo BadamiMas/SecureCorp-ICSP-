@@ -98,7 +98,7 @@ def face_login():
     # Load face encodes from DB
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT name, face_encode FROM users")
+    cursor.execute("SELECT name, role, face_encode FROM users")
     users = cursor.fetchall()
     conn.close()
 
