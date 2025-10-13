@@ -251,7 +251,7 @@ main .insights > div:hover {
 }
 
 main .insights > div span {
-    background: coral;
+    background: var(--clr-info-dark);
     padding: 0.5rem;
     border-radius: 50%;
     color: var(--clr-white);
@@ -259,11 +259,11 @@ main .insights > div span {
 }
 
 main .insights > div.expenses span {
-    background: var(--clr-danger);
+    background: var(--clr-info-dark);
 }
 
 main .insights > div.income span {
-    background: var(--clr-success);
+    background: var(--clr-info-dark);
 }
 
 main .insights > div .middle {
@@ -281,11 +281,11 @@ main h1 {
 }
 
 main .insights h1 {
-    color: var(--clr-dark);
+    color: var(--clr-dark-variant);
 }
 
 main .insights h3 {
-    color: var(--clr-dark);
+    color: var(--clr-dark-variant);
 }
 
 main .insights p {
@@ -304,50 +304,10 @@ main .insights .progress {
     border-radius: 50px;
 }
 
-main .insights svg {
-    height: 150px;
-    height: 150px;
-    position: absolute;
-    top: 0;
-}
-
-main .insights svg circle {
-    fill: none;
-    stroke: var(--clr-primary);
-    transform: rotate(270, 80, 80);
-    stroke-width: 5;
-}
-
-main .insights .sales svg circle {
-    stroke-dashoffset: 10;
-    stroke-dasharray: 150;
-}
-
-main .insights .expenses svg circle {
-    stroke-dashoffset: 10;
-    stroke-dasharray: 150;
-}
-
-main .insights .income svg circle {
-    stroke: var(--clr-success);
-    stroke-dashoffset: 10;
-    stroke-dasharray: 150;
-}
-
-main .insights .progress .number {
-    position: absolute;
-    top: 5%;
-    left: 5%;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 
 /***************
-recent orders
+COMPANY PROGRESS
 *****************/
 
 main .recent_order {
@@ -365,6 +325,7 @@ main .recent_order .table-container {
     border-radius: var(--card-border-radius);
     box-shadow: var(--box-shadow);
     padding: var(--card-padding);
+    transition: all .3s ease;
 }
 
 main .recent_order .table-container table {
@@ -372,7 +333,7 @@ main .recent_order .table-container table {
     border-collapse: collapse;
 }
 
-main .recent_order table:hover {
+main .recent_order .table-container:hover {
     box-shadow: none;
 }
 
@@ -508,7 +469,7 @@ TO DO LIST
     font-weight: 800;
 }
 
-.right .to-do:hover {
+.right .todo-list:hover {
     box-shadow: none;
 }
 

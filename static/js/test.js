@@ -57,6 +57,12 @@ listContainer.addEventListener("click", function(e) {
 
 function saveData() {
     localStorage.setItem("data", listContainer.innerHTML);
+    updatePendingCount();
+}
+
+function updatePendingCount() {
+    const totalTasks = listContainer.querySelectorAll("li").length;
+    document.getElementById("pending-tasks-count").innerText = totalTasks;
 }
 
 function showTask() {
@@ -64,3 +70,4 @@ function showTask() {
 }
 
 showTask();
+updatePendingCount();
