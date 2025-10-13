@@ -61,8 +61,8 @@ function saveData() {
 }
 
 function updatePendingCount() {
-    const totalTasks = listContainer.querySelectorAll("li").length;
-    document.getElementById("pending-tasks-count").innerText = totalTasks;
+    const pendingTasks = listContainer.querySelectorAll("li:not(.checked)").length;
+    document.getElementById("pending-count").innerText = pendingTasks;
 }
 
 function showTask() {
@@ -71,3 +71,96 @@ function showTask() {
 
 showTask();
 updatePendingCount();
+
+
+/* Fetch Total Employees */
+
+function loadTotalEmployees() {
+    fetch('/get_total_employees')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('total-employees').innerText = data.total_employees;
+        })
+        .catch(error => console.error('Error loading total employees:', error));
+}
+
+loadTotalEmployees();
+setInterval(loadTotalEmployees, 600000); // Refresh every 10min (60 seconds = 60000 milliseconds)
+
+
+/* Fetch Attendance Log */
+
+// ===== Attendance Log =====
+function formatTime(date) {
+    return date.toLocaleString(); // e.g., 10/13/2025, 9:42:18 AM
+}
+
+function setLoginTime() {
+    const today = new Date().toDateString();
+    const data = JSON.parse(localStorage.getItem("attendance")) || {};
+
+    // If today's date is new, record login
+    if (data.date !== today) {
+        data.date = today;
+        data.login = formatTime(new Date());
+        data.logout = null;
+        localStorage.setItem("attendance", JSON.stringify(data));
+    }
+
+    displayAttendance();
+}
+
+function setLogoutTime() {
+    const data = JSON.parse(localStorage.getItem("attendance"));
+    if (data) {
+        data.logout = formatTime(new Date());
+        localStorage.setItem("attendance", JSON.stringify(data));
+    }
+    displayAttendance();
+}
+
+function displayAttendance() {
+    const data = JSON.parse(localStorage.getItem("attendance"));
+    const today = new Date().toDateString();
+
+    if (!data || data.date !== today) {
+        localStorage.removeItem("attendance");
+        document.getElementById("login-time").innerText = "-";
+        document.getElementById("logout-time").innerText = "-";
+        document.getElementById("active-hours").innerText = "0";
+        return;
+    }
+
+    document.getElementById("login-time").innerText = data.login || "-";
+    document.getElementById("logout-time").innerText = data.logout || "-";
+    calculateActiveTime();
+}
+
+// Record login when dashboard loads
+window.addEventListener("load", setLoginTime);
+
+// Record logout when tab closes or user logs out
+window.addEventListener("beforeunload", setLogoutTime);
+
+
+
+/* Fetch Active Hours */
+
+function calculateActiveTime() {
+    const data = JSON.parse(localStorage.getItem("attendance"));
+    if (!data || !data.login) {
+        document.getElementById("active-hours").innerText = "0";
+        return;
+    }
+
+    const loginTime = new Date(data.login);
+    const logoutTime = data.logout ? new Date(data.logout) : new Date(); // if not logged out, use current time
+
+    const diffMs = logoutTime - loginTime; // difference in milliseconds
+    const diffHrs = diffMs / (1000 * 60 * 60); // convert to hours
+
+    // Show up to 2 decimal places
+    document.getElementById("active-hours").innerText = diffHrs.toFixed(2);
+}
+
+setInterval(calculateActiveTime, 60000); // Update active hours every min

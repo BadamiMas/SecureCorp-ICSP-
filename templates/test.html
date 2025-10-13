@@ -82,7 +82,7 @@
                 <div class="middle">
                     <div class="left">
                         <h3>Total Employees</h3>
-                        <h1>$25,024</h1>
+                        <h1 id="total-employees">0</h1>
                     </div>
                     <div class="progress">
                     </div>
@@ -91,23 +91,23 @@
             <!--EMPLOYEES-->
 
 
-            <!--PROJECTS-->
-            <div class="expenses">
+            <!--ACTIVE TIME-->
+            <div class="projects">
                 <span class="material-symbols-outlined">local_mall</span>
                 <div class="middle">
                     <div class="left">
-                        <h3>Active Projects</h3>
-                        <h1>$25,024</h1>
+                        <h3>Active Time (Hrs)</h3>
+                        <h1 id="active-hours">0</h1>
                     </div>
                     <div class="progress">
                     </div>
                 </div>
             </div>
-            <!--PROJECTS-->
+            <!--ACTIVE TIME-->
 
 
             <!--PENDING TASKS-->
-            <div class="income">
+            <div class="tasks">
                 <span class="material-symbols-outlined">stacked_line_chart</span>
                 <div class="middle">
                     <div class="left">
@@ -219,9 +219,9 @@
             <!--end top-->
             
 
-            <!--start recent update-->
+            <!--start attendance-->
             <div class="recent_updates">
-                <h2>Recent Updates</h2>
+                <h2>Attendance Log</h2>
 
 
                 <div class="updates">
@@ -230,31 +230,15 @@
                             <img src="{{ url_for('static', filename='images/me2.jpg') }}">
                         </div>
                         <div class="message">
-                            <p><b>{{ username }}</b> received his order of Night lion tech GPS drone</p>
+                            <p><b>Login Time:</b> <span id="login-time">-</span></p>
+                            <p><b>Logout Time:</b> <span id="logout-time">-</span></p>
                         </div>
                     </div> 
-
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="{{ url_for('static', filename='images/me2.jpg') }}">
-                        </div>
-                        <div class="message">
-                            <p><b>{{ username }}</b> received his order of Night lion tech GPS drone</p>
-                        </div>
-                    </div> 
-
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="{{ url_for('static', filename='images/me2.jpg') }}">
-                        </div>
-                        <div class="message">
-                            <p><b>{{ username }}</b> received his order of Night lion tech GPS drone</p>
-                        </div>
-                    </div> 
+ 
                 </div>    
                     
             </div>
-            <!--end recent update-->
+            <!--end attendance-->
 
             <!--start to do list-->
             <div class="to-do">

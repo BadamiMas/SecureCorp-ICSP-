@@ -143,6 +143,18 @@ def hr_dashboard():
         return render_template('hr_dashboard.html', username=session['user'])
 
 
+@app.route('/get_total_employees')
+def get_total_employees():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM employees")
+    total = cursor.fetchone()[0]
+    cursor.close()
+    conn.close()
+    return jsonify({'total_employees': total})
+
+
+
 @app.route('/logout')
 def logout():
     session.clear()

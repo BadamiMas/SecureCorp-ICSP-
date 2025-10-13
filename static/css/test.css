@@ -258,11 +258,11 @@ main .insights > div span {
     font-size: 2rem;
 }
 
-main .insights > div.expenses span {
+main .insights > div.projects span {
     background: var(--clr-info-dark);
 }
 
-main .insights > div.income span {
+main .insights > div.tasks span {
     background: var(--clr-info-dark);
 }
 
@@ -475,8 +475,8 @@ TO DO LIST
 
 .right .todo-list {
     width: 100%;
-    min-height: 43vh;
-    max-height: 43vh;
+    min-height: 56.9vh;
+    max-height: 56.9vh;
     overflow-y: auto;
     background-color: var(--clr-white);
     border-radius: var(--card-border-radius);
