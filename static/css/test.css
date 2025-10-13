@@ -2,18 +2,18 @@
 
 
 :root {
-    --clr-primary: #004d00;
+    --clr-primary: #263b5a; /*menu*/
     --clr-danger: #ff4d4d;
     --clr-success: #4dff4d;
-    --clr-white: #ffffff;
-    --clr-info-dark: #031957;
-    --clr-info-light: #002756;
+    --clr-white: #c9a6b7; /*colour of box*/
+    --clr-info-dark: #a8c4a8; /*sidemenu text*/
+    --clr-info-light: #183123; /*box shadow color dark mode*/
     --clr-dark: #000000;
     --clr-warning: #ffcc00;
-    --clr-light: #f0f0f0;
-    --clr-primary-variant: #006600;
-    --clr-dark-variant: #1a1a1a;
-    --clr-color-background: #d2ffe3;
+    --clr-light: #e8ffed; /*box shadow color light mode*/
+    --clr-primary-variant: #1b381b;
+    --clr-dark-variant: #ffffff;
+    --clr-color-background: #cfcfcf;
 
     --card-border-radius: 2rem;
     --border-radius-1: 0.4rem;
@@ -25,6 +25,20 @@
     --padding-1: 1.2rem;
     --box-shadow: 0 2rem 3rem var(--clr-light);
 
+}
+
+
+/*************
+DARK THEME
+*************/
+
+.dark-theme-variables {
+    --clr-color-background: #131d13;
+    --clr-white: #263b5a;
+    --clr-light: rgba(0, 0, 0, 0.4);
+    --clr-dark: #c9a6b7;
+    --clr-dark-variant: #a8a8a8;
+    --box-shadow: 0 2rem 3rem var(--clr-info-light);
 }
 
 
@@ -120,11 +134,15 @@ aside {
 }
 
 aside .top {
-    background-color: var(--clr-white);
+    background-color: #a8c4a8;
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 1.4rem;
+}
+
+aside .top div.close span {
+    display: none; /* default for desktop */
 }
 
 aside .logo  {
@@ -145,7 +163,7 @@ sidebar
 ************/
 
 aside .sidebar {
-    background-color: var(--clr-white);
+    background-color: #263b5a;
     display: flex;
     flex-direction: column;
     height: 85vh;
@@ -177,20 +195,6 @@ aside .sidebar a:last-child {
     position: absolute;
     bottom: 1rem;
     width: 100%;
-}
-
-aside .sidebar a.active {
-    background-color: var(--clr-light);
-    color: var(--clr-primary);
-    margin-left: 0;
-  /*border-left: 5px solid var(--clr-primary); */
-}
-
-aside .sidebar a.active::before {
-    content: '';
-    width: 6px;
-    height: 100%;
-    background-color: var(--clr-primary);
 }
 
 aside .sidebar a:hover {
@@ -354,15 +358,18 @@ main .recent_order h2 {
     color: var(--clr-dark);
 }
 
-main .recent_order table {
+main .recent_order .table-container {
+    max-height: 60vh; /* adjust height as needed */
+    overflow-y: auto;
     background-color: var(--clr-white);
-    width: 100%;
     border-radius: var(--card-border-radius);
-    padding: var(--card-padding);
-    text-align: center;
     box-shadow: var(--box-shadow);
-    transition: all .3s ease;
-    color: var(--clr-dark)
+    padding: var(--card-padding);
+}
+
+main .recent_order .table-container table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
 main .recent_order table:hover {
@@ -434,7 +441,7 @@ RIGHT SECTION
 }
 
 .right .theme-toggler span.active {
-    background-color: var(--clr-primary);
+    background-color: #192519;
     color: white
 }
 
@@ -507,8 +514,8 @@ TO DO LIST
 
 .right .todo-list {
     width: 100%;
-    min-height: 48.5vh;
-    max-height: 48.5vh;
+    min-height: 43vh;
+    max-height: 43vh;
     overflow-y: auto;
     background-color: var(--clr-white);
     border-radius: var(--card-border-radius);
@@ -522,7 +529,7 @@ TO DO LIST
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    background: #ccb4bb;
+    background: #a8c4a8;
     padding: 5px 15px;
     border-radius: 30px;
     margin-bottom: 25px;
@@ -544,7 +551,7 @@ TO DO LIST
     outline: none;
     padding: 10px 15px;
     margin-left: 10px;
-    background: #031957;
+    background: #263b5a;
     color: #fff;
     cursor: pointer;
     font-size: 16px;
@@ -625,6 +632,10 @@ MEDIA QUERY
         display: grid;
         grid-template-columns: repeat(1, 1fr);
     }
+
+    aside .top div.close span {
+    display: none;
+    }
 }
 
 
@@ -644,6 +655,14 @@ MOBILE VIEW
         z-index: 3;
         background: var(--clr-white);
         display: none;
+        left : -100px;
+        animation: menuAni 0.5s forwards;
+    }
+
+    @keyframes menuAni {
+        to {
+            left: 0;
+        }
     }
 
     aside .logo {
@@ -695,7 +714,7 @@ MOBILE VIEW
         margin: 0 auto;
     }
 
-    .rigth .profile {
+    .right .profile {
         position: absolute;
         left: 70%;
     }
