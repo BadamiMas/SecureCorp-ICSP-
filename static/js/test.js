@@ -167,10 +167,47 @@ setInterval(calculateActiveTime, 60000); // Update active hours every min
 
 
 
+<<<<<<< HEAD
+=======
+// Define the chart function
+function drawVisualization() {
+  const data = google.visualization.arrayToDataTable([
+    ['Month', 'Cash Flow (SGD)', 'Recruitment (People)', 'Average'],
+    ['Jan',  12000, 3, 615],
+    ['Feb',  15000, 5, 682],
+    ['Mar',  8000, 2, 623],
+    ['Apr',  18000, 6, 609],
+    ['May',  14000, 4, 570]
+  ]);
+
+  const options = {
+    vAxes: {
+      0: { title: 'Cash Flow (SGD)', textStyle: { color: '#333' } },
+      1: { title: 'Recruitment (People)', textStyle: { color: '#333' } }
+    },
+    hAxis: { title: 'Month' },
+    seriesType: 'bars',
+    series: {
+      0: { targetAxisIndex: 0, color: '#2962ff' }, // cash flow (bar)
+      1: { type: 'line', targetAxisIndex: 1, color: '#00c853' } // recruitment (line)
+    },
+    backgroundColor: 'transparent',
+    chartArea: { width: '80%', height: '70%' },
+    legend: { position: 'bottom' }
+  };
+
+  const chart = new google.visualization.ComboChart(
+    document.getElementById('chart_div')
+  );
+  chart.draw(data, options);
+}
+
+>>>>>>> b1275c2d0dbf934f1dde2c69d57cb403bcf4a17b
 // Load Google Charts
 google.charts.load('current', { packages: ['corechart'] });
 google.charts.setOnLoadCallback(drawVisualization);
 
+<<<<<<< HEAD
 function drawVisualization() {
   fetch('/get_company_progress')
     .then(response => response.json())
@@ -212,5 +249,8 @@ function drawVisualization() {
     .catch(error => console.error('Error loading data:', error));
 }
 
+=======
+// Window resize
+>>>>>>> b1275c2d0dbf934f1dde2c69d57cb403bcf4a17b
 window.addEventListener('resize', drawVisualization);
 setInterval(drawVisualization, 60000);
