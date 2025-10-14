@@ -126,7 +126,7 @@ def dashboard():
     elif role == 'Head':
         return redirect(url_for('head_dashboard'))
     else:
-        return render_template('test.html', username=session['user'])
+        return render_template('login.html', username=session['user'])
 
     
 
