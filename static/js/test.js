@@ -168,49 +168,69 @@ setInterval(calculateActiveTime, 60000); // Update active hours every min
 
 
 // Load Google Charts
-google.charts.load('current', { packages: ['corechart'] });
-google.charts.setOnLoadCallback(drawVisualization);
+google.charts.load("current", { packages: ['corechart'] });
+google.charts.setOnLoadCallback(drawChart);
 
-function drawVisualization() {
-  fetch('/get_company_progress')
-    .then(response => response.json())
-    .then(rows => {
-      const dataArray = [['Month', 'Cash In (SGD)', 'Cash Out (SGD)', 'Employees']];
+function drawChart() {
+    fetch('/get_company_progress_acc')
+        .then(res => res.json())
+        .then(rows => {
+            // Create header row
+            const dataArray = [['Month', 'Cash In', 'Cash Out', { role: 'style' }]];
 
-      rows.forEach(row => {
-        const monthName = new Date(2025, row.month - 1).toLocaleString('default', { month: 'short' });
-        dataArray.push([
-          monthName,
-          parseFloat(row.cash_in),
-          parseFloat(row.cash_out),
-          parseInt(row.employees)
-        ]);
-      });
+            rows.forEach(row => {
+                // Optional: pick colors for cash in/out columns
+                dataArray.push([
+                    row.month,
+                    row.cash_in,
+                    row.cash_out,
+                    null // We'll style via series below
+                ]);
+            });
 
-      const data = google.visualization.arrayToDataTable(dataArray);
+            const data = google.visualization.arrayToDataTable([
+                ['Month', 'Cash In', 'Cash Out'],
+                ...rows.map(r => [r.month, r.cash_in, r.cash_out])
+            ]);
 
-      const options = {
-        vAxes: {
-          0: { title: 'Cash Flow (SGD)', textStyle: { color: '#ffffff' }, titleTextStyle: { color: '#ffffff' } },
-          1: { title: 'Employees', textStyle: { color: '#ffffff' }, titleTextStyle: { color: '#ffffff' } }
-        },
-        hAxis: { title: 'Month', textStyle: { color: '#ffffff' }, titleTextStyle: { color: '#ffffff' }},
-        seriesType: 'bars',
-        series: {
-          0: { type: 'bars', targetAxisIndex: 0, color: '#3cb424' },  // cash in
-          1: { type: 'bars', targetAxisIndex: 0, color: '#e53935' },  // cash out
-          2: { type: 'line', targetAxisIndex: 1, color: '#e6e798' } // employees
-        },
-        backgroundColor: 'transparent',
-        chartArea: { width: '80%', height: '70%' },
-        legend: { position: 'bottom', textStyle: { color: '#ffffff' }}
-      };
+            const options = {
+                title: 'Cash In & Out (Last 6 Months)',
+                titleTextStyle: { color: '#ffffff', fontSize: 16 },
+                chartArea: { width: '80%', height: '70%' },
+                backgroundColor: 'transparent',
+                legend: { position: 'bottom', textStyle: { color: '#ffffff' } },
+                hAxis: { textStyle: { color: '#ffffff' }, titleTextStyle: { color: '#ffffff' } },
+                vAxis: { textStyle: { color: '#ffffff' }, titleTextStyle: { color: '#ffffff' } },
+                series: {
+                    0: { color: '#28b60c' }, // Cash In
+                    1: { color: '#bb1310' }  // Cash Out
+                },
+                bar: { groupWidth: '60%' }
+            };
 
-      const chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    })
-    .catch(error => console.error('Error loading data:', error));
+            const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        })
+        .catch(err => console.error('Error fetching cash flow:', err));
 }
 
-window.addEventListener('resize', drawVisualization);
-setInterval(drawVisualization, 60000);
+// Redraw chart on window resize
+window.addEventListener('resize', drawChart);
+setInterval(drawHRChart, 60000);
+
+
+
+
+// LOGOUT //
+
+let logoutTimer;
+function resetTimer() {
+  clearTimeout(logoutTimer);
+  logoutTimer = setTimeout(() => {
+    window.location.href = "/logout";
+  }, 600000); // 1 min inactivity
+}
+
+window.onload = resetTimer;
+window.onmousemove = resetTimer;
+window.onkeypress = resetTimer;

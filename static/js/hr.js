@@ -168,49 +168,54 @@ setInterval(calculateActiveTime, 60000); // Update active hours every min
 
 
 // Load Google Charts
-google.charts.load('current', { packages: ['corechart'] });
-google.charts.setOnLoadCallback(drawVisualization);
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawHRChart);
 
-function drawVisualization() {
-  fetch('/get_company_progress')
-    .then(response => response.json())
+function drawHRChart() {
+  fetch('/get_company_progress_hr')
+    .then(res => res.json())
     .then(rows => {
-      const dataArray = [['Month', 'Cash In (SGD)', 'Cash Out (SGD)', 'Employees']];
+      const dataArray = [['Month', 'Employees']];
 
       rows.forEach(row => {
-        const monthName = new Date(2025, row.month - 1).toLocaleString('default', { month: 'short' });
-        dataArray.push([
-          monthName,
-          parseFloat(row.cash_in),
-          parseFloat(row.cash_out),
-          parseInt(row.employees)
-        ]);
+        const monthName = new Date(row.year, row.month - 1).toLocaleString('default', { month: 'short' });
+        dataArray.push([monthName, parseInt(row.employees)]);
       });
 
       const data = google.visualization.arrayToDataTable(dataArray);
 
       const options = {
-        vAxes: {
-          0: { title: 'Cash Flow (SGD)', textStyle: { color: '#ffffff' }, titleTextStyle: { color: '#ffffff' } },
-          1: { title: 'Employees', textStyle: { color: '#ffffff' }, titleTextStyle: { color: '#ffffff' } }
-        },
-        hAxis: { title: 'Month', textStyle: { color: '#ffffff' }, titleTextStyle: { color: '#ffffff' }},
-        seriesType: 'bars',
-        series: {
-          0: { type: 'bars', targetAxisIndex: 0, color: '#3cb424' },  // cash in
-          1: { type: 'bars', targetAxisIndex: 0, color: '#e53935' },  // cash out
-          2: { type: 'line', targetAxisIndex: 1, color: '#e6e798' } // employees
-        },
+        title: 'Employees Recruited (Last 6 Months)', 
+        titleTextStyle: { color: '#ffffff', fontSize: 16, bold: true },
+        curveType: 'function',
+        legend: { position: 'bottom', textStyle: { color: '#ffffff' } },
+        hAxis: { textStyle: { color: '#ffffff' }, titleTextStyle: { color: '#ffffff' } },
+        vAxis: { textStyle: { color: '#ffffff' }, titleTextStyle: { color: '#ffffff' } },
         backgroundColor: 'transparent',
         chartArea: { width: '80%', height: '70%' },
-        legend: { position: 'bottom', textStyle: { color: '#ffffff' }}
+        series: { 0: { color: '#21c700' } }
       };
 
-      const chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+      const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
       chart.draw(data, options);
     })
-    .catch(error => console.error('Error loading data:', error));
+    .catch(err => console.error('Error fetching HR data:', err));
 }
 
-window.addEventListener('resize', drawVisualization);
-setInterval(drawVisualization, 60000);
+window.addEventListener('resize', drawHRChart);
+setInterval(drawHRChart, 60000);
+
+
+// LOGOUT //
+
+let logoutTimer;
+function resetTimer() {
+  clearTimeout(logoutTimer);
+  logoutTimer = setTimeout(() => {
+    window.location.href = "/logout";
+  }, 600000); // 1 min inactivity
+}
+
+window.onload = resetTimer;
+window.onmousemove = resetTimer;
+window.onkeypress = resetTimer;

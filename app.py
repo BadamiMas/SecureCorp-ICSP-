@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session, flash
 import mysql.connector
-from flask_bcrypt import Bcrypt, generate_password_hash
+from flask_bcrypt import Bcrypt
 from flask_wtf import CSRFProtect
 from datetime import timedelta, datetime
 from flask_wtf.csrf import generate_csrf
@@ -16,10 +16,7 @@ app.secret_key = "icsp"  # needed for session
 # Security Config
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
-@app.before_request
-def make_session_permanent():
-    session.permanent = True
-    session.modified = True  # tells Flask to reset the expiration
+
 
 # Extensions
 bcrypt = Bcrypt(app)
@@ -65,6 +62,7 @@ def login():
     if user:
         session['user'] = user['name']
         session['role'] = user.get("role", "user")
+        session.permanent = True
         return redirect(url_for('dashboard'))
     else:
         flash("Invalid username or password")
@@ -222,6 +220,95 @@ def get_company_progress():
             })
 
     return jsonify(formatted)
+
+
+# HR GRAPH
+
+@app.route('/get_company_progress_hr')
+def get_company_progress_hr():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    now = datetime.now()
+    start_date = (now.replace(day=1) - timedelta(days=150)).replace(day=1)  # last 5 months
+    end_date = now
+
+    cursor.execute("""
+        SELECT 
+            YEAR(date_hired) AS year,
+            MONTH(date_hired) AS month,
+            COUNT(*) AS total_hired
+        FROM employees
+        WHERE date_hired BETWEEN %s AND %s
+        GROUP BY YEAR(date_hired), MONTH(date_hired)
+        ORDER BY YEAR(date_hired), MONTH(date_hired)
+    """, (start_date, end_date))
+
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    # fill missing months with 0
+    data_by_month = {}
+    for i in range(6):
+        month = (start_date + timedelta(days=30*i)).month
+        data_by_month[(now.year, month)] = 0
+
+    for row in rows:
+        key = (row['year'], row['month'])
+        data_by_month[key] = row['total_hired']
+
+    formatted = []
+    for (year, month) in sorted(data_by_month.keys()):
+        if year == now.year:
+            formatted.append({
+                'year': year,
+                'month': month,
+                'employees': data_by_month[(year, month)]
+            })
+
+    return jsonify(formatted)
+
+
+# ACCOUNTANT GRAPH
+
+@app.route('/get_company_progress_acc')
+def get_cash_flow():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Last 6 months
+    now = datetime.now()
+    start_date = (now.replace(day=1) - timedelta(days=150)).replace(day=1)  # roughly 5 months before
+    end_date = now
+
+    cursor.execute("""
+        SELECT 
+            YEAR(flow_date) AS year,
+            MONTH(flow_date) AS month,
+            SUM(cash_in) AS cash_in,
+            SUM(cash_out) AS cash_out
+        FROM cash_flow
+        WHERE flow_date BETWEEN %s AND %s
+        GROUP BY YEAR(flow_date), MONTH(flow_date)
+        ORDER BY YEAR(flow_date), MONTH(flow_date)
+    """, (start_date, end_date))
+
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    # Format to return month name + amounts
+    data = []
+    for row in rows:
+        month_name = datetime(row['year'], row['month'], 1).strftime('%b')
+        data.append({
+            'month': month_name,
+            'cash_in': float(row['cash_in'] or 0),
+            'cash_out': float(row['cash_out'] or 0)
+        })
+
+    return jsonify(data)
 
 
 

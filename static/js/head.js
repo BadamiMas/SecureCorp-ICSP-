@@ -214,3 +214,17 @@ function drawVisualization() {
 
 window.addEventListener('resize', drawVisualization);
 setInterval(drawVisualization, 60000);
+
+// LOGOUT //
+
+let logoutTimer;
+function resetTimer() {
+  clearTimeout(logoutTimer);
+  logoutTimer = setTimeout(() => {
+    window.location.href = "/logout";
+  }, 600000); // 1 min inactivity
+}
+
+window.onload = resetTimer;
+window.onmousemove = resetTimer;
+window.onkeypress = resetTimer;
