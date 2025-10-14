@@ -2,7 +2,7 @@ from flask import Flask, jsonify, render_template, request, redirect, url_for, s
 import mysql.connector
 from flask_bcrypt import Bcrypt, generate_password_hash
 from flask_wtf import CSRFProtect
-from datetime import timedelta
+from datetime import timedelta, datetime
 from flask_wtf.csrf import generate_csrf
 import cv2
 import numpy as np
@@ -119,11 +119,11 @@ def dashboard():
         return redirect(url_for('home'))
     
     role = session.get('role', 'user')
-    if role == 'acc':
+    if role == 'Accountant':
         return redirect(url_for('acc_dashboard'))
-    elif role == 'hr':
+    elif role == 'HR':
         return redirect(url_for('hr_dashboard'))
-    elif role == 'head':
+    elif role == 'Head':
         return redirect(url_for('head_dashboard'))
     else:
         return render_template('test.html', username=session['user'])
@@ -132,15 +132,15 @@ def dashboard():
 
 @app.route('/acc_dashboard')
 def acc_dashboard():
-        return render_template('acc_dashboard.html', username=session['user'])
+        return render_template('acc_dashboard.html', username=session['user'], role=session.get('role', 'user'))
 
 @app.route('/head_dashboard')
 def head_dashboard():
-        return render_template('head_dashboard.html', username=session['user'])
+        return render_template('head_dashboard.html', username=session['user'], role=session.get('role', 'user'))
 
 @app.route('/hr_dashboard')
 def hr_dashboard():
-        return render_template('hr_dashboard.html', username=session['user'])
+        return render_template('hr_dashboard.html', username=session['user'], role=session.get('role', 'user'))
 
 
 @app.route('/get_total_employees')
@@ -152,6 +152,77 @@ def get_total_employees():
     cursor.close()
     conn.close()
     return jsonify({'total_employees': total})
+
+@app.route('/get_company_progress')
+def get_company_progress():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # --- Get current year and last 6 months range ---
+    now = datetime.now()
+    start_date = (now.replace(day=1) - timedelta(days=150)).replace(day=1)  # roughly 5 months before
+    end_date = now
+
+    # --- Get monthly cash flow (sum of in/out) within last 6 months ---
+    cursor.execute("""
+        SELECT 
+            YEAR(flow_date) AS year,
+            MONTH(flow_date) AS month,
+            SUM(cash_in) AS total_in,
+            SUM(cash_out) AS total_out
+        FROM cash_flow
+        WHERE flow_date BETWEEN %s AND %s
+        GROUP BY YEAR(flow_date), MONTH(flow_date)
+        ORDER BY YEAR(flow_date), MONTH(flow_date)
+    """, (start_date, end_date))
+    cash_data = cursor.fetchall()
+
+    # --- Get employee count by hire month within last 6 months ---
+    cursor.execute("""
+        SELECT 
+            YEAR(date_hired) AS year,
+            MONTH(date_hired) AS month,
+            COUNT(*) AS total_hired
+        FROM employees
+        WHERE date_hired BETWEEN %s AND %s
+        GROUP BY YEAR(date_hired), MONTH(date_hired)
+        ORDER BY YEAR(date_hired), MONTH(date_hired)
+    """, (start_date, end_date))
+    emp_data = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    # --- Merge data ---
+    data_by_month = {}
+
+    for row in cash_data:
+        key = (row['year'], row['month'])
+        data_by_month[key] = {
+            'cash_in': float(row['total_in'] or 0),
+            'cash_out': float(row['total_out'] or 0),
+            'employees': 0
+        }
+
+    for row in emp_data:
+        key = (row['year'], row['month'])
+        if key not in data_by_month:
+            data_by_month[key] = {'cash_in': 0, 'cash_out': 0, 'employees': 0}
+        data_by_month[key]['employees'] = row['total_hired']
+
+    formatted = []
+    for (year, month) in sorted(data_by_month.keys()):
+        if year == now.year:  # only this year
+            formatted.append({
+                'year': year,
+                'month': month,
+                'cash_in': data_by_month[(year, month)]['cash_in'],
+                'cash_out': data_by_month[(year, month)]['cash_out'],
+                'employees': data_by_month[(year, month)]['employees']
+            })
+
+    return jsonify(formatted)
+
 
 
 

@@ -2,67 +2,208 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SecureCorp Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/head.css') }}">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <h2>SecureCorp</h2>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Job Section</a></li>
-                <li><a href="#">Documents</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
-            </ul>
-        </nav>
-    </aside>
+    
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Header -->
-        <header>
-            <h1>Welcome {{ user }} ({{ role }})</h1>
-        </header>
 
-        <!-- Flash messages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flash {{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+<div class="container1">
 
-        <!-- Placeholder for Quick Stats Cards (Day 2) -->
-        <section class="cards">
-            <!-- Cards will be dynamically filled later -->
-        </section>
+    <!--aside section start-->
+        <aside>
 
-        <!-- Panels -->
-        <section class="panels">
-            <div class="announcements">
-                <h3>Announcements</h3>
-                <ul>
-                    <li>No announcements yet</li>
-                </ul>
+            <div class="top">
+
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}">
+                </div>
+                <div class="close" id ="close-btn">
+                    <span class="material-symbols-outlined"> close </span>
+                </div>
             </div>
-            <div class="notifications">
-                <h3>Notifications</h3>
-                <ul>
-                    <li>No notifications yet</li>
-                </ul>
+            <!--end top-->
+
+            <div class="sidebar">
+
+                <a href="{{ url_for('dashboard') }}" class="active">
+                    <span class="material-symbols-outlined">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">work</span>
+                    <h3>Job</h3>
+                </a>                
+                <a href="#">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                    <h3>Document</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">settings</span>
+                    <h3>Setting</h3>
+                </a>
+                <a href="{{ url_for('logout') }}">
+                    <span class="material-symbols-outlined">logout</span>
+                    <h3>Logout</h3>
+                </a>
             </div>
-            <div class="recent-activity">
-                <h3>Recent Activity</h3>
-                <ul>
-                    <li>No activity yet</li>
-                </ul>
+
+
+
+        </aside>
+    <!--aside section end-->
+
+
+    <!--main section start-->
+        <main>
+            <h1>Dashboard</h1>
+             <div class="date">
+                <input type="date" id="today-date">
+             </div>
+
+             <script>
+                // Get today's date in YYYY-MM-DD format
+                const today = new Date();
+                const dd = String(today.getDate()).padStart(2, '0');
+                const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+                const yyyy = today.getFullYear();
+                const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+                // Set the value of the date input
+                document.getElementById('today-date').value = formattedDate;
+            </script>
+
+        <div class="insights">  
+            <!--EMPLOYEES-->
+            <div class="sales">
+                <span class="material-symbols-outlined">trending_up</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Total Employees</h3>
+                        <h1 id="total-employees">0</h1>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
+            <!--EMPLOYEES-->
+
+
+            <!--ACTIVE TIME-->
+            <div class="projects">
+                <span class="material-symbols-outlined">local_mall</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Active Time (Hrs)</h3>
+                        <h1 id="active-hours">0</h1>
+                    </div>
+                </div>
+            </div>
+            <!--ACTIVE TIME-->
+
+
+            <!--PENDING TASKS-->
+            <div class="tasks">
+                <span class="material-symbols-outlined">stacked_line_chart</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Pending Tasks</h3>
+                        <h1 id="pending-count">0</h1>
+                    </div>
+                </div>
+            </div>
+            <!--PENDING TASKS-->
+        </div>
+
+        <!--end insights-->
+
+
+        <!--company progress start-->
+        <div class="company_graph">
+            <h1>Company Progress</h1>
+
+            <div class="charts">
+                <div class="charts-card">
+                    <h2 class="chart-title">Overview</h2>
+                    <div id="chart_div" style="width: 100%; height: 425px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--company progress end-->
+        </main>
+    <!--main section end-->
+
+    
+        <!--right section start-->
+        <div class="right">
+            <div class="top">
+                <button id="menu-bar">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-symbols-outlined active">light_mode</span>
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p><b>{{ username }}</b></p>
+                        <p>{{role}}</p>
+                        <small class="text-muted"></small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="{{ url_for('static', filename='images/me.jpg') }}">
+                    </div>
+                </div>
+            </div>
+            <!--end top-->
+            
+
+            <!--start attendance-->
+            <div class="recent_updates">
+                <h2>Attendance Log</h2>
+
+
+                <div class="updates">
+                    <div class="update">
+                        <div class="message">
+                            <p><b>Login Time:</b> <span id="login-time">-</span></p>
+                            <p><b>Logout Time:</b> <span id="logout-time">-</span></p>
+                        </div>
+                    </div> 
+ 
+                </div>    
+                    
+            </div>
+            <!--end attendance-->
+
+            <!--start to do list-->
+            <div class="to-do">
+                <h2>To-Do List</h2>
+                <!--todo list section start-->
+                <div class="todo-list">
+                    
+                    <div class="row">
+                        <input type="text" id="input-box" placeholder="Add task...">
+                        <button onclick="addTask()">Add</button>
+                    </div>
+                    <ul id="list">
+            <!-- tasks will show -->
+                    </ul>
+                </div>
+            </div>
+            <!--end to do list-->
+
+        </div>
+        <!--end right section-->
+</div>
+
+
+
+<script src="{{ url_for('static', filename='js/head.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
 </body>
 </html>
+
+
