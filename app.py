@@ -132,15 +132,15 @@ def dashboard():
 
 @app.route('/acc_dashboard')
 def acc_dashboard():
-        return render_template('acc_dashboard.html', username=session['user'])
+        return render_template('acc_dashboard.html', username=session['user'], role=session.get('role', 'user'))
 
 @app.route('/head_dashboard')
 def head_dashboard():
-        return render_template('head_dashboard.html', username=session['user'])
+        return render_template('head_dashboard.html', username=session['user'], role=session.get('role', 'user'))
 
 @app.route('/hr_dashboard')
 def hr_dashboard():
-        return render_template('hr_dashboard.html', username=session['user'])
+        return render_template('hr_dashboard.html', username=session['user'], role=session.get('role', 'user'))
 
 
 @app.route('/get_total_employees')
