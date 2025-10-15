@@ -81,6 +81,7 @@
                             "Content-Type": "application/json",
                             "X-CSRFToken": "{{ csrf_token() }}"
                         },
+                        credentials: "include",
                         body: JSON.stringify({ image: imageData })
                     })
                     .then(res => res.json())

@@ -14,9 +14,11 @@ app = Flask(__name__)
 app.secret_key = "icsp"  # needed for session
 
 # Security Config
-app.config['SESSION_COOKIE_SECURE'] = True
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
-
+app.config.update({
+    'SESSION_COOKIE_SAMESITE': "None",
+    'SESSION_COOKIE_SECURE': True,
+    'PERMANENT_SESSION_LIFETIME' : timedelta(minutes=10)
+})
 
 # Extensions
 bcrypt = Bcrypt(app)
@@ -80,6 +82,7 @@ def face_login():
     print(data["image"][:50])   # <-- debug
 
 
+
     # Decode base64 image from browser
     image_data = data["image"].split(",")[1]
     image_bytes = base64.b64decode(image_data)
@@ -108,6 +111,7 @@ def face_login():
             session["role"] = user.get("role", "user")
             return jsonify({"success": True, "redirect": url_for("dashboard")})
 
+    print(f"Matched user: {user['name']} ({user['role']})")  # <-- debug
     return jsonify({"success": False, "message": "Face not recognized"})
 
 
