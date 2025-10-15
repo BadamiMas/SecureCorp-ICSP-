@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for, session, flash
+from flask import Flask, jsonify, render_template, request, redirect, url_for, session, flash, send_file
 import mysql.connector
 from flask_bcrypt import Bcrypt
 from flask_wtf import CSRFProtect
@@ -8,6 +8,8 @@ import cv2
 import numpy as np
 import face_recognition
 import base64
+from Secrefy import EncryptionTool
+import os
 
 
 app = Flask(__name__)
@@ -25,7 +27,8 @@ bcrypt = Bcrypt(app)
 csrf = CSRFProtect(app)
 csrf.init_app(app)
 
-
+UPLOAD_FOLDER = "uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 
@@ -128,7 +131,7 @@ def dashboard():
     elif role == 'Head':
         return redirect(url_for('head_dashboard'))
     else:
-        return render_template('login.html', username=session['user'])
+        return render_template('test.html', username=session['user'])
 
     
 
@@ -144,6 +147,12 @@ def head_dashboard():
 def hr_dashboard():
         return render_template('hr_dashboard.html', username=session['user'], role=session.get('role', 'user'))
 
+@app.route('/doc')
+def doc():
+    return render_template('doc.html')
+
+
+# HEAD GRAPH
 
 @app.route('/get_total_employees')
 def get_total_employees():
@@ -314,6 +323,54 @@ def get_cash_flow():
 
     return jsonify(data)
 
+
+# SECREFY TKINTER TO FLASK
+
+@app.route("/encrypt", methods=["GET", "POST"])
+def encrypt_file():
+    if request.method == "POST":
+        file = request.files.get("file")
+        key = request.form.get("key")
+        salt = request.form.get("salt") or key[::-1]
+
+        if not file or not key:
+            flash("File and key are required")
+            return render_template("encrypt.html")
+
+        filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+        file.save(filepath)
+
+        cipher = EncryptionTool(filepath, key, salt)
+        # Run encryption fully
+        for _ in cipher.encrypt():
+            pass  # optionally track progress
+
+        return send_file(cipher.encrypt_output_file, as_attachment=True)
+
+    return render_template("encrypt.html")
+
+
+@app.route("/decrypt", methods=["GET", "POST"])
+def decrypt_file():
+    if request.method == "POST":
+        file = request.files.get("file")
+        key = request.form.get("key")
+        salt = request.form.get("salt") or key[::-1]
+
+        if not file or not key:
+            flash("File and key are required")
+            return render_template("decrypt.html")
+
+        filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+        file.save(filepath)
+
+        cipher = EncryptionTool(filepath, key, salt)
+        for _ in cipher.decrypt():
+            pass
+
+        return send_file(cipher.decrypt_output_file, as_attachment=True)
+
+    return render_template("decrypt.html")
 
 
 
