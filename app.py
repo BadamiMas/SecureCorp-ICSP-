@@ -335,7 +335,7 @@ def encrypt_file():
 
         if not file or not key:
             flash("File and key are required")
-            return render_template("encrypt.html")
+            return render_template("doc.html")
 
         filepath = os.path.join(UPLOAD_FOLDER, file.filename)
         file.save(filepath)
@@ -347,7 +347,7 @@ def encrypt_file():
 
         return send_file(cipher.encrypt_output_file, as_attachment=True)
 
-    return render_template("encrypt.html")
+    return render_template("doc.html")
 
 
 @app.route("/decrypt", methods=["GET", "POST"])
@@ -359,7 +359,7 @@ def decrypt_file():
 
         if not file or not key:
             flash("File and key are required")
-            return render_template("decrypt.html")
+            return render_template("doc.html")
 
         filepath = os.path.join(UPLOAD_FOLDER, file.filename)
         file.save(filepath)
@@ -370,7 +370,7 @@ def decrypt_file():
 
         return send_file(cipher.decrypt_output_file, as_attachment=True)
 
-    return render_template("decrypt.html")
+    return render_template("doc.html")
 
 
 

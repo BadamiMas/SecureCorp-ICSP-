@@ -5,6 +5,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/doc.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
@@ -77,21 +78,25 @@
             </script>
 
             <div class="secrefy">
-                <form method="POST" enctype="multipart/form-data">
-                    <label>File to Encrypt:</label>
-                    <input type="file" name="file" required><br>
-                    <label>Secret Key:</label>
-                    <input type="text" name="key" required><br>
-                    <button type="submit">Encrypt</button>
-                </form>
+                <h2>Secrefy</h2>
 
-                <form method="POST" enctype="multipart/form-data">
-                    <label>File to Decrypt (.sfy):</label>
-                    <input type="file" name="file" required><br>
-                    <label>Secret Key:</label>
-                    <input type="text" name="key" required><br>
-                    <button type="submit">Decrypt</button>
-                </form>
+                <div class="secretbox">
+                    <form id="secretForm" method="POST" enctype="multipart/form-data">
+                        <!--file upload-->
+                        <input type="file" id="upload" name="file" required hidden>
+                        <label for="upload" class="uploadlabel">
+                            <span><i class="fa fa-cloud-upload"></i></span>
+                            <p id="fileLabelText">Click to Upload</p>
+                        </label>
+
+                        <!--input n buttons-->
+                        <div class="secretkey">
+                            <input type="text" name="key" id="input-box" placeholder="Type Secrefy Key..." required>
+                            <button type="submit" formaction="/encrypt">Encrypt</button>
+                            <button type="submit" formaction="/decrypt">Decrypt</button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
         </main>
@@ -120,6 +125,22 @@
             </div>
             <!--end top-->
 
+            <!--start to do list-->
+            <div class="to-do">
+                <h2>To-Do List</h2>
+                <!--todo list section start-->
+                <div class="todo-list">
+                    
+                    <div class="row">
+                        <input type="text" id="input-box" placeholder="Add task...">
+                        <button onclick="addTask()">Add</button>
+                    </div>
+                    <ul id="list">
+            <!-- tasks will show -->
+                    </ul>
+                </div>
+            </div>
+            <!--end to do list-->
         </div>
         <!--end right section-->
 </div>
