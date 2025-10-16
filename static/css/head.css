@@ -501,6 +501,7 @@ TO DO LIST
     user-select: none;
     cursor: pointer;
     position: relative;
+    color: var(--clr-dark);
 }
 
 .right ul li::before {

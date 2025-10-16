@@ -216,6 +216,6 @@ function resetTimer() {
   }, 600000); // 1 min inactivity
 }
 
-window.onload = resetTimer;
-window.onmousemove = resetTimer;
-window.onkeypress = resetTimer;
+window.addEventListener("load", resetTimer);
+window.addEventListener("mousemove", resetTimer);
+window.addEventListener("keypress", resetTimer);
