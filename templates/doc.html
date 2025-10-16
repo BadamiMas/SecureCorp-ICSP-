@@ -78,7 +78,21 @@
             </script>
 
             <div class="secrefy">
-                <h2>Secrefy</h2>
+                <div class="secrefy-header">
+                    <h2>Secrefy <button id="openPop"><span class="material-symbols-outlined">help</span></button></h2>
+                </div>
+
+                <!--help pop-up-->
+                <div class="pop" id="pop">
+                    <div class="popup">
+                        <h2>How to use Secrefy?</h2>
+                        <p>1. Click on "Click to Upload" to select a file from your device.</p>
+                        <p>2. Enter your Secrefy Key in the input box provided.</p>
+                        <p>3. Choose either "Encrypt" or "Decrypt" based on your requirement.</p>
+                        <p>4. To clear the form, click on the "Clear" button.</p>
+                        <button id="closePop">Close</button>
+                    </div>
+                </div>
 
                 <div class="secretbox">
                     <form id="secretForm" method="POST" enctype="multipart/form-data">

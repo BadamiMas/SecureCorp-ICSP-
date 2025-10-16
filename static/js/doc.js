@@ -65,6 +65,21 @@ function showTask() {
 showTask();
 
 
+// POPUP //
+
+const openBtn = document.getElementById("openPop");
+const closeBtn = document.getElementById("closePop");
+const pop = document.getElementById("pop");
+
+openBtn.addEventListener("click", () => {
+    pop.classList.add("open");
+})
+
+closeBtn.addEventListener("click", () => {
+    pop.classList.remove("open");
+})
+
+
 // FILE UPLOAD //
 
 window.addEventListener("load", () => {
