@@ -24,7 +24,7 @@ class EncryptionTool:
         
         # convert the key and salt to bytes
         self.user_key = bytes(user_key, "utf-8")
-        self.user_salt = bytes(user_key[::-1], "utf-8")
+        self.user_salt = bytes(user_salt, "utf-8")
 
         # get the file extension
         self.file_extension = self.user_file.split(".")[-1]
@@ -37,7 +37,7 @@ class EncryptionTool:
             + "." + self.file_extension + ".sfy"
 
         # decrypted file name
-        self.decrypt_output_file = self.user_file[:-5].split(".")
+        self.decrypt_output_file = self.user_file[:-4].split(".")
         self.decrypt_output_file = ".".join(self.decrypt_output_file[:-1]) \
             + "_desfy." + self.decrypt_output_file[-1]
 
@@ -113,28 +113,20 @@ class EncryptionTool:
             os.remove(self.decrypt_output_file)
 
 
+
     def hash_key_salt(self):
-        # --- convert key to hash
-        #  create a new hash object
-        hasher = hashlib.new(self.hash_type)
-        hasher.update(self.user_key)
+        """
+        Derive AES-256 key and 16-byte IV deterministically from user_key and user_salt.
+        """
+        password = self.user_key if isinstance(self.user_key, (bytes, bytearray)) else bytes(self.user_key, "utf-8")
+        salt = self.user_salt if isinstance(self.user_salt, (bytes, bytearray)) else bytes(self.user_salt, "utf-8")
 
-        # turn the output key hash into 32 bytes (256 bits)
-        self.hashed_key_salt["key"] = bytes(hasher.hexdigest()[:32], "utf-8")
-
-        # clean up hash object
-        del hasher
-
-        # --- convert salt to hash
-        #  create a new hash object
-        hasher = hashlib.new(self.hash_type)
-        hasher.update(self.user_salt)
-
-        # turn the output salt hash into 16 bytes (128 bits)
-        self.hashed_key_salt["salt"] = bytes(hasher.hexdigest()[:16], "utf-8")
+        # PBKDF2: derive 48 bytes (32 for key + 16 for IV)
+        derived = hashlib.pbkdf2_hmac('sha256', password, salt, 100_000, dklen=48)
         
-        # clean up hash object
-        del hasher
+        self.hashed_key_salt["key"] = derived[:32]
+        self.hashed_key_salt["salt"] = derived[32:48]
+
 
 
 # class EncryptionThread(threading.Thread):

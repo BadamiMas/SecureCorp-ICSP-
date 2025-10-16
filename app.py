@@ -326,51 +326,53 @@ def get_cash_flow():
 
 # SECREFY TKINTER TO FLASK
 
-@app.route("/encrypt", methods=["GET", "POST"])
+@app.route("/encrypt", methods=["POST"])
 def encrypt_file():
-    if request.method == "POST":
-        file = request.files.get("file")
-        key = request.form.get("key")
-        salt = request.form.get("salt") or key[::-1]
+    file = request.files.get("file")
+    key = request.form.get("key")
+    salt = key[::-1]  # always derive salt from key for simplicity
 
-        if not file or not key:
-            flash("File and key are required")
-            return render_template("doc.html")
+    if not file or not key:
+        flash("File and key are required")
+        return redirect(url_for("encrypt_file"))
 
-        filepath = os.path.join(UPLOAD_FOLDER, file.filename)
-        file.save(filepath)
+    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(filepath)
 
-        cipher = EncryptionTool(filepath, key, salt)
-        # Run encryption fully
-        for _ in cipher.encrypt():
-            pass  # optionally track progress
+    cipher = EncryptionTool(filepath, key, salt)
+    for _ in cipher.encrypt():  # run generator
+        pass
 
-        return send_file(cipher.encrypt_output_file, as_attachment=True)
+    return send_file(
+        cipher.encrypt_output_file,
+        as_attachment=True,
+        download_name=os.path.basename(cipher.encrypt_output_file)
+    )
 
-    return render_template("doc.html")
 
-
-@app.route("/decrypt", methods=["GET", "POST"])
+@app.route("/decrypt", methods=["POST"])
 def decrypt_file():
-    if request.method == "POST":
-        file = request.files.get("file")
-        key = request.form.get("key")
-        salt = request.form.get("salt") or key[::-1]
+    file = request.files.get("file")
+    key = request.form.get("key")
+    salt = key[::-1]  # must be exactly the same as encryption
 
-        if not file or not key:
-            flash("File and key are required")
-            return render_template("doc.html")
+    if not file or not key:
+        flash("File and key are required")
+        return redirect(url_for("decrypt_file"))
 
-        filepath = os.path.join(UPLOAD_FOLDER, file.filename)
-        file.save(filepath)
+    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(filepath)
 
-        cipher = EncryptionTool(filepath, key, salt)
-        for _ in cipher.decrypt():
-            pass
+    cipher = EncryptionTool(filepath, key, salt)
+    for _ in cipher.decrypt():
+        pass
 
-        return send_file(cipher.decrypt_output_file, as_attachment=True)
+    return send_file(
+        cipher.decrypt_output_file,
+        as_attachment=True,
+        download_name=os.path.basename(cipher.decrypt_output_file)
+    )
 
-    return render_template("doc.html")
 
 
 

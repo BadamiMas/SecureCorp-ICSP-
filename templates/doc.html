@@ -38,7 +38,7 @@
                     <span class="material-symbols-outlined">work</span>
                     <h3>Job</h3>
                 </a>                
-                <a href="#">
+                <a href="{{ url_for('doc') }}">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <h3>Document</h3>
                 </a>
@@ -82,6 +82,7 @@
 
                 <div class="secretbox">
                     <form id="secretForm" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <!--file upload-->
                         <input type="file" id="upload" name="file" required hidden>
                         <label for="upload" class="uploadlabel">
@@ -89,11 +90,27 @@
                             <p id="fileLabelText">Click to Upload</p>
                         </label>
 
+                        <!--file uploaded view-->
+                        <div id="filewrapper">
+                            <h3 class="uploaded">Uploaded Documents</h3>
+                        <!--    <div class="showfilebox">
+                                <div class="left">
+                                    <span class="filetype">PDF</span>
+                                    <h3>Web.pdf</h3>
+                                </div>
+                                <div class="right">
+                                    <span>&#215;</span>
+                            </div>  -->
+                        </div>
+
                         <!--input n buttons-->
                         <div class="secretkey">
                             <input type="text" name="key" id="input-box" placeholder="Type Secrefy Key..." required>
+                        </div>
+                        <div class="key-buttons">
                             <button type="submit" formaction="/encrypt">Encrypt</button>
                             <button type="submit" formaction="/decrypt">Decrypt</button>
+                            <button type="reset" id="clearBtn">Clear</button>
                         </div>
                     </form>
                 </div>
