@@ -21,8 +21,6 @@ themeToggler.addEventListener("click", () => {
 })
 
 
-
-
 /* To-Do List */
 
 const inputBox = document.getElementById('input-box');
@@ -216,7 +214,7 @@ function drawChart() {
 
 // Redraw chart on window resize
 window.addEventListener('resize', drawChart);
-setInterval(drawHRChart, 60000);
+setInterval(drawChart, 60000);
 
 
 
