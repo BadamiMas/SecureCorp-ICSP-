@@ -117,6 +117,9 @@ def face_login():
     print(f"Matched user: {user['name']} ({user['role']})")  # <-- debug
     return jsonify({"success": False, "message": "Face not recognized"})
 
+#--------------------------------------------
+# DASHBOARD ROUTE WITH ROLE-BASED REDIRECTION
+#--------------------------------------------
 
 @app.route('/dashboard')
 def dashboard():
@@ -146,6 +149,41 @@ def head_dashboard():
 @app.route('/hr_dashboard')
 def hr_dashboard():
         return render_template('hr_dashboard.html', username=session['user'], role=session.get('role', 'user'))
+
+#---------------------------------------------
+# JOB ROUTE
+#---------------------------------------------
+
+@app.route('/job')
+def job():
+    if 'user' not in session:
+        return redirect(url_for('home'))
+
+    role = session.get('role', 'user')
+    if role == 'Accountant':
+        return redirect(url_for('acc_job'))
+    elif role == 'HR':
+        return redirect(url_for('hr_job'))
+    elif role == 'Head':
+        return redirect(url_for('head_job'))
+    else:
+        return render_template('job.html', username=session['user'])
+
+
+@app.route('/acc_job')
+def acc_job():
+    return render_template('acc_job.html', username=session['user'], role=session.get('role', 'user'))
+
+
+@app.route('/hr_job')
+def hr_job():
+    return render_template('hr_job.html', username=session['user'], role=session.get('role', 'user'))
+
+
+@app.route('/head_job')
+def head_job():
+    return render_template('head_job.html', username=session['user'], role=session.get('role', 'user'))
+
 
 @app.route('/doc')
 def doc():
