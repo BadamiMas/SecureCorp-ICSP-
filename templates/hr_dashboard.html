@@ -142,13 +142,15 @@
                     <span class="material-symbols-outlined active">light_mode</span>
                     <span class="material-symbols-outlined">dark_mode</span>
                 </div>
+
+                <!--profile click-->
                 <div class="profile">
                     <div class="info">
                         <p><b>{{ username }}</b></p>
                         <p>{{role}}</p>
                         <small class="text-muted"></small>
                     </div>
-                    <div class="profile-photo">
+                    <div class="profile-photo" id="openProfile">
                         <img src="{{ url_for('static', filename='images/icon.jpg') }}">
                     </div>
                 </div>

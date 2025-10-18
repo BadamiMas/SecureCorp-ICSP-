@@ -76,7 +76,7 @@ function resetTimer() {
   clearTimeout(logoutTimer);
   logoutTimer = setTimeout(() => {
     window.location.href = "/logout";
-  }, 600000); // 1 min inactivity
+  }, 6000000); // 1 min inactivity
 }
 
 window.addEventListener("load", resetTimer);

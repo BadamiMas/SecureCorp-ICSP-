@@ -20,6 +20,19 @@ themeToggler.addEventListener("click", () => {
     themeToggler.querySelector("span:nth-child(2)").classList.toggle("active");
 })
 
+/* profile popup */
+const openProfile = document.getElementById("openProfile");
+const profilePop = document.getElementById("profilePop");
+const closeProfile = document.getElementById("closeProfile");
+
+openProfile.addEventListener("click", () => {
+    profilePop.classList.add("open");
+});
+
+closeProfile.addEventListener("click", () => {
+    profilePop.classList.remove("open");
+});
+
 
 /* To-Do List */
 

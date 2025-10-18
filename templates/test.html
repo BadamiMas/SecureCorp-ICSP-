@@ -143,18 +143,30 @@
                     <span class="material-symbols-outlined active">light_mode</span>
                     <span class="material-symbols-outlined">dark_mode</span>
                 </div>
+
+                <!--profile click-->
                 <div class="profile">
                     <div class="info">
                         <p><b>{{ username }}</b></p>
                         <p>{{role}}</p>
                         <small class="text-muted"></small>
                     </div>
-                    <div class="profile-photo">
+                    <div class="profile-photo" id="openProfile">
                         <img src="{{ url_for('static', filename='images/icon.jpg') }}">
                     </div>
                 </div>
             </div>
             <!--end top-->
+
+            <!--profile popup-->
+            <div class="profilePop" id="profilePop">
+                <div class="popup">
+                    <h2>Profile</h2>
+                    <p><strong>Username:</strong> {{ username }}</p>
+                    <p><strong>Role:</strong> {{ role }}</p>
+                    <button id="closeProfile">Close</button>
+                </div>
+            </div>
             
 
             <!--start attendance-->

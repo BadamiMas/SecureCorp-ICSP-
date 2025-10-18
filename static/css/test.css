@@ -384,6 +384,59 @@ RIGHT SECTION
     text-align: center;
 }
 
+.profilePop {
+    background-color: #0000009d;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: all 0.3s ease-in-out;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profilePop.open {
+    opacity: 1;
+    z-index: 9999;
+}
+
+.popup {
+    background-color: var(--clr-white);
+    padding: 15px 25px;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    width: 500px;
+    transition: all .3s ease;
+}
+
+.popup:hover {
+    box-shadow: none;
+}
+
+.popup h2 {
+    margin: 0;
+    color: var(--clr-dark);
+}
+
+.popup p {
+    line-height: 24px;
+    margin: 10px 0;
+}
+
+.popup button {
+    border-radius: var(--border-radius-2);
+    border: 0;
+    color: var(--clr-dark);
+    background: var(--clr-white);
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
 .right .info h3 {
     color: var(--clr-dark);
 }
