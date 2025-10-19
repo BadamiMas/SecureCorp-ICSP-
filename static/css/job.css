@@ -27,6 +27,13 @@
 
 }
 
+/************
+font
+*************/
+
+body, h1, h2, h3, h4, h5, h6, p, table, th, td, input, button, label {
+    font-family: 'Poppins', sans-serif !important;
+}
 
 /*************
 DARK THEME
@@ -63,7 +70,6 @@ body {
     background: var(--clr-color-background);
     overflow: auto;
 }
-
 
 .container1 {
     display: grid;
@@ -184,6 +190,7 @@ aside .sidebar a {
     align-items: center;
     height: 3.2rem;
     transition: all .1s ease-in;
+    text-decoration: none;
 }
 
 aside .sidebar a span {
@@ -233,11 +240,200 @@ main .date {
     border-radius: var(--border-radius-1);
     margin-top: 1rem;
     padding: 0.5rem 1.6rem;
+    font-family: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit {
+    padding-right: 0; /* remove unwanted right gap */
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    margin-left: -25px; /* pull calendar icon closer */
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+/******************
+JOB SECTION
+*******************/
+
+.job {
+    margin-top: 1.4rem;
+    margin-bottom: 2rem;
+    margin-left: -20px;
+}
+
+.job-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.job-header h2 {
+    margin: 0;
+    color: var(--clr-dark);
+    font-size: 1.3rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    gap: 5px;
+}
+
+.p-3 {
+    background: var(--clr-white);
+    padding: 30px;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+    text-align: center;
+    margin-top: 1.6rem;
+    min-height: 72.5vh;
+    max-height: 72.5vh;
+    overflow-y: auto;
+}
+
+.p-3:hover {
+    box-shadow: none;
+}
+
+.p-3 .row button {
+    color: #fff;
+    background: #a8c4a8;
+    margin: 5px;
+    border: transparent;
+}
+
+main .p-3 table {
+    border-color: #a8c4a8;
+    border: 4px solid #a8c4a8;
+    
+}
+
+main .p-3 table tr td, th{
+    vertical-align: middle;
+    color: var(--clr-dark);
+    border: 2px solid #a8c4a8;
+}
+
+main .p-3 td button{
+    margin: 5px;
+}
+
+main .p-3 td button i{
+    font-size: 20px;
+}
+
+/******************
+MODAL FORM
+*******************/
+
+.modal-content {
+    background: var(--clr-white);
+    color: var(--clr-dark);
+}
+
+main .modal-content .modal-header{
+    background: #a8c4a8;
+    color: #fff;
+}
+
+main .modal-content .modal-body {
+    background: var(--clr-white);
+    color: var(--clr-dark);
+}
+
+main .modal-content .modal-body form {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0;
+    background: var(--clr-white);
+    color: var(--clr-dark);
+}
+
+main .modal-content .modal-body form .imgholder{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+main .modal-content .imgholder .upload{
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    width: 100%;
+    height: 100px;
+    background: rgba(0,0,0,0.3);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+main .modal-content .upload i{
+    color: #a8c4a8;
+    font-size: 35px;
+}
+
+main .modal-content .imgholder:hover .upload{
+    display: flex;
+}
+
+main .modal-content .imgholder .upload input{
+    display: none;
+}
+
+main .modal-content .modal-body form .inputField{
+    flex-basis: 68%;
+    border-left: 5px groove #a8c4a8;
+    padding-left: 20px;
+}
+
+main .modal-content form .inputField > div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+main .modal-content form .inputField > div label{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+main .modal-content #userForm form .inputField > div label::after{
+    content: "*";
+    color: rgb(21, 255, 0);
+}
+
+main .modal-content form .inputField > div input{
+    width: 75%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+    border-bottom: 2px solid #a8c4a8;
+    color: var(--clr-dark);
+}
+
+main .modal-content .modal-footer .submit{
+    font-size: 18px;
+    background: #a8c4a8;
+    color: #fff;
 }
 
 
+/******************
+READ DATA MODAL
+*******************/
 
-
+main #readData form .inputField > div input{
+    color: #000;
+    font-size: 18px;
+    color: var(--clr-dark);
+}
 
 
 /******************
@@ -337,7 +533,7 @@ TO DO LIST
     transition: all .3s ease;
 }
 
-.right .row {
+.right .todo-list .taskrow {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -348,7 +544,7 @@ TO DO LIST
     margin-bottom: 25px;
 }
 
-.right input {
+.right .todo-list input {
     flex: 1 1 auto;
     border: none;
     background: transparent;
@@ -359,7 +555,7 @@ TO DO LIST
     color:#000;
 }
 
-.right .to-do button {
+.right .todo-list button {
     border: none;
     outline: none;
     padding: 10px 15px;

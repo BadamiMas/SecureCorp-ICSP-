@@ -412,7 +412,16 @@ def decrypt_file():
     )
 
 
+#**************************
+# CRUD OPERATIONS
+#**************************
 
+
+
+
+
+
+# LOGOUT ROUTE #
 
 @app.route('/logout')
 def logout():
