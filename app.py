@@ -167,7 +167,7 @@ def job():
     elif role == 'Head':
         return redirect(url_for('head_job'))
     else:
-        return render_template('job.html', username=session['user'])
+        return redirect(url_for('jobtable'))
 
 
 @app.route('/acc_job')
@@ -416,61 +416,75 @@ def decrypt_file():
 # CRUD OPERATIONS
 #**************************
 
-# READ – get all users
-@app.route('/api/users', methods=['GET'])
-def get_users():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM employees")
-    users = cursor.fetchall()
-    conn.close()
-    return users
+@app.route('/jobtable')
+def jobtable():
+    if 'user' not in session:
+        return redirect(url_for('home'))
 
-# CREATE – add a new user
-@app.route('/api/users', methods=['POST'])
-def add_user():
-    data = request.get_json(force=True)
+    edit_id = request.args.get('edit_id')
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM employees")
+    employees = cursor.fetchall()
+    employee_to_edit = None
+    if edit_id:
+        cursor.execute("SELECT * FROM employees WHERE id=%s", (edit_id,))
+        employee_to_edit = cursor.fetchone()
+    conn.close()
+    return render_template('job.html', employees=employees, employee_to_edit=employee_to_edit)
+
+# Add employee
+@app.route('/addj', methods=['POST'])
+def addj():
+    name = request.form['name']
+    age = request.form['age']
+    city = request.form['city']
+    email = request.form['email']
+    number = request.form['number']
+    role = request.form['role']
+    date_hired = request.form['date_hired']
 
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO employees (name, age, city, email, number, role, date_hired)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
-    """, (data['employeeName'], data['employeeAge'], data['employeeCity'],
-          data['employeeEmail'], data['employeePhone'], data['employeePost'],
-          data['startDate']))
+    """, (name, age, city, email, number, role, date_hired))
     conn.commit()
     conn.close()
-    return jsonify({'message': 'User added successfully'})
+    return redirect(url_for('jobtable'))
 
-# UPDATE – edit an existing user
-@app.route('/api/users/<int:id>', methods=['PUT'])
-def update_user(id):
-    data = request.get_json(force=True)
+# Edit employee
+@app.route('/editj/<int:id>', methods=['POST'])
+def editj(id):
+    name = request.form['name']
+    age = request.form['age']
+    city = request.form['city']
+    email = request.form['email']
+    number = request.form['number']
+    role = request.form['role']
+    date_hired = request.form['date_hired']
+
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        UPDATE employees SET name=%s, age=%s, city=%s, email=%s, number=%s, role=%s, date_hired=%s
+        UPDATE employees
+        SET name=%s, age=%s, city=%s, email=%s, number=%s, role=%s, date_hired=%s
         WHERE id=%s
-    """, (data['employeeName'], data['employeeAge'], data['employeeCity'],
-          data['employeeEmail'], data['employeePhone'], data['employeePost'],
-          data['startDate'], id))
+    """, (name, age, city, email, number, role, date_hired, id))
     conn.commit()
     conn.close()
-    return jsonify({'message': 'User updated successfully'})
+    return redirect(url_for('jobtable'))
 
-# DELETE – remove a user
-@app.route('/api/users/<int:id>', methods=['DELETE'])
-def delete_user(id):
-    print("Deleting user with ID:", id, type(id))  # Debug line
+# Delete employee
+@app.route('/deletej/<int:id>', methods=['POST'])
+def deletej(id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM employees WHERE id = %s", (id,))
+    cursor.execute("DELETE FROM employees WHERE id=%s", (id,))
     conn.commit()
-    cursor.close()
     conn.close()
-    return jsonify({'message': 'User deleted successfully'})
-
+    return redirect(url_for('jobtable'))
 
 
 
