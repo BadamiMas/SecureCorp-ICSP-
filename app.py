@@ -416,6 +416,60 @@ def decrypt_file():
 # CRUD OPERATIONS
 #**************************
 
+# READ – get all users
+@app.route('/api/users', methods=['GET'])
+def get_users():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM employees")
+    users = cursor.fetchall()
+    conn.close()
+    return users
+
+# CREATE – add a new user
+@app.route('/api/users', methods=['POST'])
+def add_user():
+    data = request.get_json(force=True)
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO employees (name, age, city, email, number, role, date_hired)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (data['employeeName'], data['employeeAge'], data['employeeCity'],
+          data['employeeEmail'], data['employeePhone'], data['employeePost'],
+          data['startDate']))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'User added successfully'})
+
+# UPDATE – edit an existing user
+@app.route('/api/users/<int:id>', methods=['PUT'])
+def update_user(id):
+    data = request.get_json(force=True)
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE employees SET name=%s, age=%s, city=%s, email=%s, number=%s, role=%s, date_hired=%s
+        WHERE id=%s
+    """, (data['employeeName'], data['employeeAge'], data['employeeCity'],
+          data['employeeEmail'], data['employeePhone'], data['employeePost'],
+          data['startDate'], id))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'User updated successfully'})
+
+# DELETE – remove a user
+@app.route('/api/users/<int:id>', methods=['DELETE'])
+def delete_user(id):
+    print("Deleting user with ID:", id, type(id))  # Debug line
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM employees WHERE id = %s", (id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return jsonify({'message': 'User deleted successfully'})
 
 
 
