@@ -3,35 +3,42 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: white;
+    background: #c9a6b78e;
     font-family: Arial, sans-serif;
 }
 
 .logo {
-    display: block;
+    display: flex;
     margin: 0 auto 30px auto;
     width: 120px;
+    align-items: center;
 }
 
 .login-container {
     text-align: center;
 }
 
-.login-box input {
+.login-form input {
     display: block;
     margin: 10px auto;
     padding: 10px 15px;
     border-radius: 20px;
-    border: 1px solid #ccc;
+    border: 2px solid #000000;
     width: 200px;
     background-color: #d6f5d6;
 }
 
-.btn {
+.login-form button {
+    width: 200px;
+    background-color: #d6f5d6;
+    border-radius: 20px;
+    border: 2px solid #000000;
+}
+
+.face-login button {
     background-color: #004d00;
     color: white;
     padding: 10px 25px;
-    margin-top: 10px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
@@ -48,4 +55,7 @@ body {
     margin-top: 10px;
 }
 
+video {
+    background: #c9a6b7;
+}
 
