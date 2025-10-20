@@ -58,7 +58,7 @@
         <main>
             <h1>Dashboard</h1>
              <div class="date">
-                <input type="date" id="today-date">
+                <input type="date" id="today-date" class="calendar">
              </div>
 
              <script>
@@ -91,7 +91,7 @@
                             <input type="email" name="email" value="{{ employee_to_edit.email }}" placeholder="Email" required>
                             <input type="text" name="number" value="{{ employee_to_edit.number }}" placeholder="Number" required>
                             <input type="text" name="role" value="{{ employee_to_edit.role }}" placeholder="Role" required>
-                            <input type="date" name="date_hired" value="{{ employee_to_edit.date_hired }}" required>
+                            <input type="date" name="date_hired" class="hire-date" value="{{ employee_to_edit.date_hired }}" required>
                             <button type="submit">Update</button>
                             <a href="{{ url_for('jobtable') }}">Cancel</a>
                         </form>
@@ -105,15 +105,15 @@
                             <input type="email" name="email" placeholder="Email" required>
                             <input type="text" name="number" placeholder="Number" required>
                             <input type="text" name="role" placeholder="Role" required>
-                            <input type="date" name="date_hired" required>
+                            <input type="date" name="date_hired" class="hire-date" required>
                             <button type="submit">Add</button>
                         </form>
                     {% endif %}
                 </div>
 
                 <!-- Employee Table -->
-                <div class="jobbox">
-                    <table border="1">
+                <div class="jobtable">
+                    <table>
                         <tr>
                             <th>ID</th><th>Name</th><th>Age</th><th>City</th><th>Email</th>
                             <th>Number</th><th>Role</th><th>Date Hired</th><th>Actions</th>

@@ -161,9 +161,9 @@ def job():
 
     role = session.get('role', 'user')
     if role == 'Accountant':
-        return redirect(url_for('acc_job'))
+        return redirect(url_for('cashtable'))
     elif role == 'HR':
-        return redirect(url_for('hr_job'))
+        return redirect(url_for('jobtable'))
     elif role == 'Head':
         return redirect(url_for('head_job'))
     else:
@@ -413,8 +413,12 @@ def decrypt_file():
 
 
 #**************************
-# CRUD OPERATIONS
+# JOB CRUD OPERATIONS
 #**************************
+
+#-------------------------------
+# HR CRUD
+#-------------------------------
 
 @app.route('/jobtable')
 def jobtable():
@@ -431,7 +435,7 @@ def jobtable():
         cursor.execute("SELECT * FROM employees WHERE id=%s", (edit_id,))
         employee_to_edit = cursor.fetchone()
     conn.close()
-    return render_template('job.html', employees=employees, employee_to_edit=employee_to_edit)
+    return render_template('hr_job.html', employees=employees, employee_to_edit=employee_to_edit)
 
 # Add employee
 @app.route('/addj', methods=['POST'])
@@ -485,6 +489,87 @@ def deletej(id):
     conn.commit()
     conn.close()
     return redirect(url_for('jobtable'))
+
+
+#-------------------------------
+# ACC CRUD
+#-------------------------------
+
+# View cash flow table
+@app.route('/cashtable')
+def cashtable():
+    if 'user' not in session:
+        return redirect(url_for('home'))
+
+    edit_id = request.args.get('edit_id')
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM cash_flow ORDER BY flow_date DESC")
+    cash_flows = cursor.fetchall()
+    cash_to_edit = None
+
+    if edit_id:
+        cursor.execute("SELECT * FROM cash_flow WHERE id=%s", (edit_id,))
+        cash_to_edit = cursor.fetchone()
+
+    conn.close()
+    return render_template('acc_job.html', cash_flows=cash_flows, cash_to_edit=cash_to_edit)
+
+
+# Add cash flow
+@app.route('/addc', methods=['POST'])
+def addc():
+    flow_date = request.form['flow_date']
+    cash_in = request.form['cash_in']
+    cash_out = request.form['cash_out']
+    name = request.form['name']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO cash_flow (flow_date, cash_in, cash_out, name)
+        VALUES (%s, %s, %s, %s)
+    """, (flow_date, cash_in, cash_out, name))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('cashtable'))
+
+
+# Edit cash flow
+@app.route('/editc/<int:id>', methods=['POST'])
+def editc(id):
+    flow_date = request.form['flow_date']
+    cash_in = request.form['cash_in']
+    cash_out = request.form['cash_out']
+    name = request.form['name']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE cash_flow
+        SET flow_date=%s, cash_in=%s, cash_out=%s, name=%s
+        WHERE id=%s
+    """, (flow_date, cash_in, cash_out, name, id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('cashtable'))
+
+
+# Delete cash flow
+@app.route('/deletec/<int:id>', methods=['POST'])
+def deletec(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM cash_flow WHERE id=%s", (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('cashtable'))
+
+
+
+#-------------------------------
+# HEAD CRUD
+#-------------------------------
 
 
 

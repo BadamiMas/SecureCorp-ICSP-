@@ -73,6 +73,74 @@
                 document.getElementById('today-date').value = formattedDate;
             </script>
 
+            <!--JOB SECTION-->
+            <div class="job">
+                <div class="job-header">
+                    <h2>Employee Management</h2>
+                </div>
+                
+                <div class="jobbox">
+
+                    {% if employee_to_edit %}
+                        <h3>Edit Employee</h3>
+                        <form method="POST" action="{{ url_for('editj', id=employee_to_edit.id) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="text" name="name" value="{{ employee_to_edit.name }}" placeholder="Name" required>
+                            <input type="number" name="age" value="{{ employee_to_edit.age }}" placeholder="Age" required>
+                            <input type="text" name="city" value="{{ employee_to_edit.city }}" placeholder="City" required>
+                            <input type="email" name="email" value="{{ employee_to_edit.email }}" placeholder="Email" required>
+                            <input type="text" name="number" value="{{ employee_to_edit.number }}" placeholder="Number" required>
+                            <input type="text" name="role" value="{{ employee_to_edit.role }}" placeholder="Role" required>
+                            <input type="date" name="date_hired" class="hire-date" value="{{ employee_to_edit.date_hired }}" required>
+                            <button type="submit">Update</button>
+                            <a href="{{ url_for('jobtable') }}">Cancel</a>
+                        </form>
+                    {% else %}
+                        <h3>Add Employee</h3>
+                        <form method="POST" action="{{ url_for('addj') }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="text" name="name" placeholder="Name" required>
+                            <input type="number" name="age" placeholder="Age" required>
+                            <input type="text" name="city" placeholder="City" required>
+                            <input type="email" name="email" placeholder="Email" required>
+                            <input type="text" name="number" placeholder="Number" required>
+                            <input type="text" name="role" placeholder="Role" required>
+                            <input type="date" name="date_hired" class="hire-date" required>
+                            <button type="submit">Add</button>
+                        </form>
+                    {% endif %}
+                </div>
+
+                <!-- Employee Table -->
+                <div class="jobtable">
+                    <table>
+                        <tr>
+                            <th>ID</th><th>Name</th><th>Age</th><th>City</th><th>Email</th>
+                            <th>Number</th><th>Role</th><th>Date Hired</th><th>Actions</th>
+                        </tr>
+                        {% for emp in employees %}
+                        <tr>
+                            <td>{{ emp.id }}</td>
+                            <td>{{ emp.name }}</td>
+                            <td>{{ emp.age }}</td>
+                            <td>{{ emp.city }}</td>
+                            <td>{{ emp.email }}</td>
+                            <td>{{ emp.number }}</td>
+                            <td>{{ emp.role }}</td>
+                            <td>{{ emp.date_hired }}</td>
+                            <td>
+                                <a href="{{ url_for('jobtable', edit_id=emp.id) }}">Edit</a>
+                                <form action="{{ url_for('deletej', id=emp.id) }}" method="POST" style="display:inline;">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    
+                </div>
+            </div>
 
         </main>
     <!--end main section-->

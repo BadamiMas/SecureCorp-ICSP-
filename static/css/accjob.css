@@ -227,17 +227,162 @@ main input {
     color: var(--clr-dark);
 }
 
-main .date {
+main .calendar {
     display: inline-block;
     background-color: var(--clr-white);
     border-radius: var(--border-radius-1);
     margin-top: 1rem;
     padding: 0.5rem 1.6rem;
+    font-family: inherit;
 }
 
+main .date .calendar input[type="date"]::-webkit-datetime-edit {
+    padding-right: 0; /* remove unwanted right gap */
+}
 
+.calendar input[type="date"]::-webkit-calendar-picker-indicator {
+    margin-left: -25px; /* pull calendar icon closer */
+    cursor: pointer;
+    opacity: 0.7;
+}
 
+/******************
+JOB SECTION
+*******************/
 
+.job {
+    margin-top: 1.4rem;
+    margin-bottom: 2rem;
+    margin-left: -20px;
+}
+
+.job-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.job-header h2 {
+    margin: 0;
+    color: var(--clr-dark);
+    font-size: 1.3rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    gap: 5px;
+}
+
+.jobbox {
+    width: 100%;
+    min-height: 25vh;
+    max-height: 25vh;
+    overflow-y: auto;
+    background-color: var(--clr-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+}
+
+.jobbox:hover {
+    box-shadow: none;
+}
+
+.jobbox h3 {
+    text-align: center;
+    color: var(--clr-dark);
+    margin-top: -10px;
+    margin-bottom: 5px;
+}
+
+.jobbox form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+    color: #fff
+}
+
+.jobbox form input[type="text"], input[type="number"], input[type="email"] {
+    padding: 5px;
+    font-size: 12px;
+    background: #a8c4a8;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.hire-date {
+    padding: 5px;
+    font-size: 12px;
+    background: #a8c4a8;
+    border-radius: 5px;
+    width: 100%;
+    color: #555;
+}
+
+.jobbox form button {
+    padding: 5px;
+    font-size: 12px;
+    background-color: #006b00;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.jobtable {
+    width: 100%;
+    min-height: 48.2vh;
+    max-height: 48.2vh;
+    overflow-y: auto;
+    background-color: var(--clr-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+    margin-top: 10px;
+}
+
+.jobtable:hover {
+    box-shadow: none;
+}
+
+.jobtable table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--clr-dark);
+}
+
+.jobtable table, .jobtable th, .jobtable td {
+    border: 1px solid #000;
+}
+
+.jobtable th, .jobtable td {
+    padding: 8px;
+    text-align: left;
+    background: #a8c4a873;
+}
+
+.jobtable a {
+    background-color: rgb(206, 185, 0);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    margin: 10px;
+    margin-bottom: 10px;
+}
+
+.jobtable button {
+    background-color: rgb(139, 0, 0);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: 10px;
+}
 
 
 /******************
