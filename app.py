@@ -10,6 +10,9 @@ import face_recognition
 import base64
 from Secrefy import EncryptionTool
 import os
+from face import encodings
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 
 app = Flask(__name__)
@@ -165,7 +168,7 @@ def job():
     elif role == 'HR':
         return redirect(url_for('jobtable'))
     elif role == 'Head':
-        return redirect(url_for('head_job'))
+        return redirect(url_for('headtable'))
     else:
         return redirect(url_for('jobtable'))
 
@@ -570,6 +573,97 @@ def deletec(id):
 #-------------------------------
 # HEAD CRUD
 #-------------------------------
+
+# View all Head users
+@app.route('/headtable')
+def headtable():
+    if 'user' not in session:
+        return redirect(url_for('home'))
+
+    edit_id = request.args.get('edit_id')
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM users ORDER BY id DESC")
+    users = cursor.fetchall()
+    user_to_edit = None
+
+    if edit_id:
+        cursor.execute("SELECT * FROM users WHERE id=%s", (edit_id,))
+        user_to_edit = cursor.fetchone()
+
+    conn.close()
+    return render_template('head_job.html', users=users, user_to_edit=user_to_edit)
+
+
+# Add Head user
+@app.route('/addh', methods=['POST'])
+def addh():
+    name = request.form['name']
+    password = request.form['password']
+    role = request.form['role']
+    image_file = request.files['face_image']  # face image input
+
+    # Save temporarily to get encoding
+    image_path = f"temp/{image_file.filename}"
+    image_file.save(image_path)
+
+    face_encode_b64 = encodings(image_path)
+    if not face_encode_b64:
+        return "No face detected in the image.", 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO users (name, password, role, face_encode)
+        VALUES (%s, %s, %s, %s)
+    """, (name, password, role, face_encode_b64))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('headtable'))
+
+
+# Edit Head user
+@app.route('/edith/<int:id>', methods=['POST'])
+def edith(id):
+    name = request.form['name']
+    password = request.form['password']
+    role = request.form['role']
+    image_file = request.files.get('face_image')  # optional, may not upload new image
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    if image_file and image_file.filename != "":
+        image_path = f"temp/{image_file.filename}"
+        image_file.save(image_path)
+        face_encode_b64 = encodings(image_path)
+        cursor.execute("""
+            UPDATE users
+            SET name=%s, password=%s, role=%s, face_encode=%s
+            WHERE id=%s
+        """, (name, password, role, face_encode_b64, id))
+    else:
+        cursor.execute("""
+            UPDATE users
+            SET name=%s, password=%s, role=%s
+            WHERE id=%s
+        """, (name, password, role, id))
+
+    conn.commit()
+    conn.close()
+    return redirect(url_for('headtable'))
+
+
+# Delete Head user
+@app.route('/deleteh/<int:id>', methods=['POST'])
+def deleteh(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM users WHERE id=%s", (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('headtable'))
 
 
 
