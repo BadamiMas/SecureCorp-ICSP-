@@ -63,11 +63,11 @@ def login():
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM users WHERE name=%s AND password=%s", (name, password))
+    cursor.execute("SELECT * FROM users WHERE name=%s", (name,))
     user = cursor.fetchone()
     conn.close()
 
-    if user:
+    if user and bcrypt.check_password_hash(user['password'], password):
         session['user'] = user['name']
         session['role'] = user.get("role", "user")
         session.permanent = True
@@ -610,7 +610,7 @@ def addh():
 
     
     # Hash the password
-    hashed_pw = generate_password_hash(display_password)
+    hashed_pw = bcrypt.generate_password_hash(display_password).decode('utf-8')
 
     # Save temporarily to get encoding
     image_path = f"temp/{image_file.filename}"
@@ -641,7 +641,7 @@ def edith(id):
     image_file = request.files.get('face_image')  # optional, may not upload new image
 
     # Hash the password
-    hashed_pw = generate_password_hash(password)
+    hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8')
 
     conn = get_db_connection()
     cursor = conn.cursor()
