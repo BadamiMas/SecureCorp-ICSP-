@@ -387,7 +387,7 @@ JOB SECTION
     margin-bottom: 10px;
 }
 
-.jobtable button {
+.delete-btn {
     background-color: rgb(139, 0, 0);
     color: #fff;
     border: none;

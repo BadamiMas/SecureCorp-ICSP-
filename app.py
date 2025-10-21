@@ -591,6 +591,11 @@ def headtable():
         cursor.execute("SELECT * FROM users WHERE id=%s", (edit_id,))
         user_to_edit = cursor.fetchone()
 
+    # Attach plain-text display passwords from session
+    display_pw_dict = session.get('display_passwords', {})
+    for u in users:
+        u["display_password"] = display_pw_dict.get(u["name"], "••••••")  # hide hashed value visually
+
     conn.close()
     return render_template('head_job.html', users=users, user_to_edit=user_to_edit)
 
@@ -599,9 +604,13 @@ def headtable():
 @app.route('/addh', methods=['POST'])
 def addh():
     name = request.form['name']
-    password = request.form['password']
+    display_password = request.form['password']
     role = request.form['role']
     image_file = request.files['face_image']  # face image input
+
+    
+    # Hash the password
+    hashed_pw = generate_password_hash(display_password)
 
     # Save temporarily to get encoding
     image_path = f"temp/{image_file.filename}"
@@ -616,7 +625,7 @@ def addh():
     cursor.execute("""
         INSERT INTO users (name, password, role, face_encode)
         VALUES (%s, %s, %s, %s)
-    """, (name, password, role, face_encode_b64))
+    """, (name, hashed_pw, role, face_encode_b64))
     conn.commit()
     conn.close()
 
@@ -631,6 +640,9 @@ def edith(id):
     role = request.form['role']
     image_file = request.files.get('face_image')  # optional, may not upload new image
 
+    # Hash the password
+    hashed_pw = generate_password_hash(password)
+
     conn = get_db_connection()
     cursor = conn.cursor()
 
@@ -642,13 +654,13 @@ def edith(id):
             UPDATE users
             SET name=%s, password=%s, role=%s, face_encode=%s
             WHERE id=%s
-        """, (name, password, role, face_encode_b64, id))
+        """, (name, hashed_pw, role, face_encode_b64, id))
     else:
         cursor.execute("""
             UPDATE users
             SET name=%s, password=%s, role=%s
             WHERE id=%s
-        """, (name, password, role, id))
+        """, (name, hashed_pw, role, id))
 
     conn.commit()
     conn.close()
