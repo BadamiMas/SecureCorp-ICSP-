@@ -37,4 +37,4 @@ The following should also be taken note of that the cmake, dlib installed has to
 * The dlib can be installed from github.com/eddiehe99/dlib-whl/
 
 
-# Make sure to also have database connected, for minimal changes, open a new database with the name 'icsp' and import the .sql file. It will import all of the necessary databases required for the connection
+Make sure to also have database connected, for minimal changes, open a new database with the name 'icsp' and import the .sql file. It will import all of the necessary databases required for the connection
