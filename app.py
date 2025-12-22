@@ -126,6 +126,7 @@ def face_login():
 
 @app.route('/dashboard')
 def dashboard():
+    
     if 'user' not in session:
         return redirect(url_for('home'))
     
