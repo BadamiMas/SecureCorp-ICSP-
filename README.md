@@ -1,12 +1,12 @@
 # **ICSP FINAL PROJECT**
 
 ### RBAC Dashboard for SMEs
+In this project, I had created an office management system web app which is role based access control (RBAC). It has a centralised database, this allows all to have the information saved together while only seeing the data that is assigned to the specific role of the employees. I also added the feature of biometric login by facial recognition whereby only the respective employee can have access to their specific dashboard. To store these details, hashing is also implemented to protect it from vulnerability too.
 
 
 
 
-
-App.py is the app that is to run. To run it, the following modules are needed to be installed.
+## App.py is the app that is to run. To run it, the following modules are needed to be installed.
 
 # OpenCV
 pip install opencv
