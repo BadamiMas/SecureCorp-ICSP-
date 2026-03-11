@@ -5,30 +5,31 @@ In this project, I had created an office management system web app which is role
 
 
 
-
+#Important Note:
+## This is my first time using HTML, CSS and JS, hence it is a bad attempt and it is recommended to not use my format but in fact learn from my mistakes!
 ## App.py is the app that is to run. To run it, the following modules are needed to be installed.
 
-# OpenCV
+### OpenCV
 pip install opencv
 
 
-# face_recognition
+### face_recognition
 python pip install face_recognition
 
-# c++
+### c++
 install vs studio and install c++
 
-# cmake
+### cmake
 install cmake (in the readme tools file)
 
-# dlib
+### dlib
 install dlib (//)
 
-# setuptools
+### setuptools
 pip list
 pip install setuptools
 
-# pycryptodome
+### pycryptodome
 pip install pycryptodome
 
 The following should also be taken note of that the cmake, dlib installed has to be the same version as the Python that is installed.
