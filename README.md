@@ -5,7 +5,7 @@ In this project, I had created an office management system web app which is role
 
 
 
-#Important Note:
+# Important Note:
 ## This is my first time using HTML, CSS and JS, hence it is a bad attempt and it is recommended to not use my format but in fact learn from my mistakes!
 ## App.py is the app that is to run. To run it, the following modules are needed to be installed.
 
